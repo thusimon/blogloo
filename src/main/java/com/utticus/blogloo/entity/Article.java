@@ -1,17 +1,19 @@
 package com.utticus.blogloo.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
 public class Article {
     @Id
-    @GeneratedValue(generator = "uuid4")
-    @GenericGenerator(name = "UUID", strategy = "uuid4")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
