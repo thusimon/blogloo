@@ -5,12 +5,17 @@ import com.utticus.blogloo.entity.ArticleInfoDTO;
 import com.utticus.blogloo.jpa.ArticleRepo;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.nio.ByteBuffer;
 import java.util.List;
@@ -30,27 +35,48 @@ public class ArticleController {
         return new UUID(bb.getLong(), bb.getLong());
     }
 
-    @RequestMapping(value = "/all", method= RequestMethod.GET)
+    @GetMapping(value = "/all")
     @ResponseBody
     public List<ArticleInfoDTO> getAll() {
         return articleRepo.findAllInfo();
     }
 
-    @RequestMapping(value = "/full", method= RequestMethod.GET)
+    @GetMapping(value = "/full")
     @ResponseBody
     public Optional<Article> getById(@RequestParam("id") String id) {
         return articleRepo.findById(getUUIDFromBase64Str(id));
     }
 
-    @RequestMapping(value = "/info", method= RequestMethod.GET)
+    @GetMapping(value = "/info")
     @ResponseBody
     public Optional<ArticleInfoDTO> getInfoById(@RequestParam("id") String id) {
         return articleRepo.findInfoById(getUUIDFromBase64Str(id));
     }
 
-    @RequestMapping(value = "/full", method= RequestMethod.POST)
+    @PostMapping(value = "/full")
     @ResponseBody
     public Article addArticle(@RequestBody Article article) {
         return articleRepo.save(article);
+    }
+
+    @PutMapping(value = "/full")
+    @ResponseBody
+    public Article updateArticle(@RequestBody Article article) {
+        UUID id = article.getId();
+        if (id == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID missing, can not update");
+        }
+        Optional<Article> currentArticle = articleRepo.findById(id);
+        if (currentArticle.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no such article with ID, can not update");
+        }
+        return articleRepo.save(article);
+    }
+
+    @DeleteMapping(value = "/full")
+    @ResponseBody
+    public boolean deleteArticle(@RequestParam("id") String id) {
+        articleRepo.deleteById(getUUIDFromBase64Str(id));
+        return true;
     }
 }
