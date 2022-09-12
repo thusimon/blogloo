@@ -1,15 +1,23 @@
-import React, { createContext, useReducer } from 'react';
-import logo from './logo.svg';
-import { AppContext, initContextData } from './context/app-context';
-import { allReducer } from './context/reducer';
+import { AppContextProvider } from './context/app-context';
 import Head from './components/Head';
-import './App.css';
+import SideList from './components/SideList';
+import ArticleContent from './components/ArticleContent';
+
+import './App.scss';
 
 function App() {
   return (
-    <div className="App">
-      <Head />
-    </div>
+    <AppContextProvider>
+      <div className="app">
+        <div className='app-header-container'>
+          <Head />
+        </div>
+        <div className='app-main-container'>
+          <SideList />
+          <ArticleContent />
+        </div>
+      </div>
+    </AppContextProvider>
   );
 }
 

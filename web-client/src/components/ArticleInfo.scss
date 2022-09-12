@@ -1,0 +1,39 @@
+.article-info-container {
+  display: grid;
+  grid-template-columns: auto 20px;
+  padding: 5px;
+  .article-info-basic {
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-areas:
+    "title title"
+    "author time";
+    .grid-cell {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .grid-title {
+      grid-area: title
+    }
+    .grid-author {
+      grid-area: author;
+    }
+    .grid-time {
+      grid-area: time;
+    }
+    .grid-cell-small {
+      font-size: 0.75em;
+      font-style: italic;
+    }
+  }
+}
+
+.article-info-container:not(.article-info-container-selected):hover {
+  background-color: ghostwhite;
+}
+
+.article-info-container-selected {
+  background-color: aliceblue;
+}

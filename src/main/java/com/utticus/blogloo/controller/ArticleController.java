@@ -56,6 +56,9 @@ public class ArticleController {
     @PostMapping(value = "/full")
     @ResponseBody
     public Article addArticle(@RequestBody Article article) {
+        if (article.getArticleListId() == null) {
+            article.setArticleListId(UUID.randomUUID());
+        }
         return articleRepo.save(article);
     }
 

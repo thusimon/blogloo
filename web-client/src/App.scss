@@ -1,0 +1,26 @@
+.app {
+  user-select: none;
+  .app-header-container {
+    .app-header {
+      background-color: #282c34;
+      height: 30px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      font-size: calc(2px + 2vmin);
+      color: white;
+      .logo-text {
+        margin-left: 12px;
+      }
+    }
+  }
+  .app-main-container {
+    display: grid;
+    grid-template-columns: 200px auto;
+    height: calc(100vh - 30px);
+    .side-list-info {
+      border-right: 1px dashed black;
+    }
+  }
+}
