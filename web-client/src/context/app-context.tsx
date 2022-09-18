@@ -9,7 +9,7 @@ export interface ContextDataType {
 
 export enum Actions {
   UpdateLocale,
-  UpdateArticleListId
+  UpdateArticleAndListId
 };
 
 export interface ActionType {
@@ -19,7 +19,7 @@ export interface ActionType {
 
 export interface ContextType {
   state: ContextDataType;
-  dispatch: (type: ActionType, data: Object) => void;
+  dispatch: (message: ActionType) => void;
 }
 
 const initContextData: ContextDataType = {
@@ -33,7 +33,7 @@ const AppReducer = (state: ContextDataType, action: ActionType) => {
   switch(type) {
     case Actions.UpdateLocale:
       return {...state, ...data};
-    case Actions.UpdateArticleListId:
+    case Actions.UpdateArticleAndListId:
       return {...state, ...data};
     default:
       return state
@@ -53,7 +53,7 @@ export const AppContextProvider = ({children}: ProviderPropType) => {
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
-export const useAppContext = () => {
+export const useAppContext = (): ContextType => {
   const context = useContext(AppContext)
   if (context === undefined) {
     throw new Error('useAppContext must be used within a AppContextProvider')
