@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { useAppContext } from '../context/app-context';
 import Article, { ArticleType } from '../model/Article';
 import Welcome from './Welcome';
+
 import './ArticleContent.scss';
 
 const ArticleContent = () => {

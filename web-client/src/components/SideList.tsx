@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../context/app-context';
-import { LOCALE } from '../types';
 import ArticleInfo from './ArticleInfo';
 import { default as ArticleInfoModel, ArticleInfoType } from '../model/ArticleInfo';
 import { groupBy } from '../utils';
 
 const SideList = () => {
-  const {state} = useAppContext()
+  const {state} = useAppContext();
   const [articles, setArticles] = useState([] as ArticleInfoModel[][]);
 
   /**
