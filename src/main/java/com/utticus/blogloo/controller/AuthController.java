@@ -1,7 +1,7 @@
 package com.utticus.blogloo.controller;
 
-import com.utticus.blogloo.model.AuthRequest;
-import com.utticus.blogloo.model.AuthResponse;
+import com.utticus.blogloo.model.AuthCredentials;
+import com.utticus.blogloo.model.AuthJwt;
 import com.utticus.blogloo.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,18 +31,28 @@ public class AuthController {
 
     @PostMapping("/token")
     @ResponseBody
-    public AuthResponse auth(@RequestBody AuthRequest authRequest) {
+    public AuthJwt auth(@RequestBody AuthCredentials authCredentials) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            authRequest.getUsername(),
-                            authRequest.getPassword())
+                            authCredentials.getUsername(),
+                            authCredentials.getPassword())
             );
         } catch(BadCredentialsException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authCredentials.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails);
-        return new AuthResponse(jwt);
+        return new AuthJwt(jwt);
+    }
+
+    @PostMapping("/validate")
+    @ResponseBody
+    public boolean validate(@RequestBody AuthJwt authJwt) {
+        String jwt = authJwt.getJwt();
+        if (jwt == null || jwt.isBlank()) {
+            return false;
+        }
+        return jwtUtil.isTokenExpired(jwt);
     }
 }

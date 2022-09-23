@@ -4,6 +4,8 @@ import ArticleInfo from './ArticleInfo';
 import { default as ArticleInfoModel, ArticleInfoType } from '../model/ArticleInfo';
 import { groupBy } from '../utils';
 
+import './SideList.scss';
+
 const SideList = () => {
   const {state} = useAppContext();
   const [articles, setArticles] = useState([] as ArticleInfoModel[][]);
@@ -33,7 +35,8 @@ const SideList = () => {
       const articleInfoRequest = await fetch('/api/article/all');
       const articleResp = await articleInfoRequest.json() as ArticleInfoType[];
       const articleInfos = articleResp.map(article => new ArticleInfoModel(article));
-      const sortedGroupedArticles = groupArticlesByListId(articleInfos);
+      let sortedGroupedArticles = groupArticlesByListId(articleInfos);
+      sortedGroupedArticles = Array(30).fill(sortedGroupedArticles).flat()
       setArticles(sortedGroupedArticles);
       console.log(39, sortedGroupedArticles)
     }
@@ -41,8 +44,13 @@ const SideList = () => {
   }, []);
 
   return (
-    <div className='side-list-info'>
-      {articles.map((articleGroup, idx) => <ArticleInfo key={`article-info-group-${idx}`} articles={articleGroup} listId={articleGroup[0].articleListId} />)}
+    <div className='side-list-container'>
+      <div className='side-list-info'>
+        {articles.map((articleGroup, idx) => <ArticleInfo key={`article-info-group-${idx}`} articles={articleGroup} listId={articleGroup[0].articleListId} />)}
+      </div>
+      <div className='side-list-footer'>
+        <button>+</button>
+      </div>
     </div>
   );
 }

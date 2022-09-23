@@ -1,12 +1,12 @@
 package com.utticus.blogloo.model;
 
-public class AuthRequest {
+public class AuthCredentials {
     private String username;
     private String password;
 
-    public AuthRequest() {}
+    public AuthCredentials() {}
 
-    public AuthRequest(String username, String password) {
+    public AuthCredentials(String username, String password) {
         this.username = username;
         this.password = password;
     }

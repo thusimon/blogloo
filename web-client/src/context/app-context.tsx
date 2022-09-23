@@ -5,11 +5,13 @@ export interface ContextDataType {
   locale: LOCALE;
   articleId: string;
   listId: string;
+  jwt: string;
 }
 
 export enum Actions {
   UpdateLocale,
-  UpdateArticleAndListId
+  UpdateArticleAndListId,
+  UpdateJWT
 };
 
 export interface ActionType {
@@ -25,7 +27,8 @@ export interface ContextType {
 const initContextData: ContextDataType = {
   locale: LOCALE.en,
   articleId: '',
-  listId: ''
+  listId: '',
+  jwt: ''
 };
 
 const AppReducer = (state: ContextDataType, action: ActionType) => {
@@ -34,6 +37,8 @@ const AppReducer = (state: ContextDataType, action: ActionType) => {
     case Actions.UpdateLocale:
       return {...state, ...data};
     case Actions.UpdateArticleAndListId:
+      return {...state, ...data};
+    case Actions.UpdateJWT:
       return {...state, ...data};
     default:
       return state

@@ -1,11 +1,11 @@
 package com.utticus.blogloo.model;
 
-public class AuthResponse {
+public class AuthJwt {
     private String jwt;
 
-    public AuthResponse() {}
+    public AuthJwt() {}
 
-    public AuthResponse(String jwt) {
+    public AuthJwt(String jwt) {
         this.jwt = jwt;
     }
 

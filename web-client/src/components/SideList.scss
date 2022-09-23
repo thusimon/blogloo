@@ -1,0 +1,10 @@
+.side-list-container {
+  border-right: 1px dashed black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100vh - 30px);
+  .side-list-info {
+    overflow-y: auto;
+  }
+}
