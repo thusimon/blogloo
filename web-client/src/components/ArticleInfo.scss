@@ -8,11 +8,22 @@
     grid-template-columns: 60% 40%;
     grid-template-areas:
     "title title"
+    "locale locale"
     "author time";
     .grid-cell {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+    }
+    .grid-cell-small {
+      font-size: 0.75em;
+      font-style: italic;
+    }
+    .grid-hide {
+      height: 0px;
+    }
+    .grid-show {
+      height: 23px;
     }
     .grid-title {
       grid-area: title
@@ -23,9 +34,33 @@
     .grid-time {
       grid-area: time;
     }
-    .grid-cell-small {
-      font-size: 0.75em;
-      font-style: italic;
+    .grid-locale {
+      grid-area: locale;
+      display: flex;
+      justify-content: left;
+      transition: height 0.5s;
+      .icon {
+        margin: 4px;
+        width: 20px;
+        transition: transform 0.5s
+      }
+      .icon:hover {
+        transform: scale(1.25);
+      }
+      .selected {
+        outline: 2px solid dodgerblue;
+      }
+
+    }
+  }
+  .article-info-locale-select {
+    img {
+      width: 20px;
+      cursor: pointer;
+      transition: transform 0.5s
+    }
+    img:hover {
+      transform: scale(1.25);
     }
   }
 }

@@ -38,7 +38,6 @@ const SideList = () => {
       let sortedGroupedArticles = groupArticlesByListId(articleInfos);
       sortedGroupedArticles = Array(30).fill(sortedGroupedArticles).flat()
       setArticles(sortedGroupedArticles);
-      console.log(39, sortedGroupedArticles)
     }
     getArticles();
   }, []);
