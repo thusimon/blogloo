@@ -16,7 +16,7 @@ const AdminLogin = () => {
       password
     };
     const tokenResp = await fetch('/auth/token', {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -28,8 +28,9 @@ const AdminLogin = () => {
     }
     setWrongCreds(false);
     const jwtData = await tokenResp.json();
+    localStorage.setItem('jwt', jwtData.jwt);
     dispatch({type: Actions.UpdateJWT, data: jwtData});
-    navigate('/home');
+    navigate('/admin/manage');
   }
   return <div>
     <p>Admin Login here!</p>

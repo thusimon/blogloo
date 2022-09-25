@@ -1,30 +1,13 @@
-import { LOCALE } from "../types";
+import ArticleInfo, { ArticleInfoType } from "./ArticleInfo";
 
-export interface ArticleType {
-  id: string;
-  articleListId: string;
-  title: string;
-  author: string;
-  createAt: string;
-  locale: string;
+export interface ArticleType extends ArticleInfoType {
   content: string;
 }
 
-class Article {
-  id: string;
-  articleListId: string;
-  title: string;
-  author: string;
-  createAt: Date;
-  locale: LOCALE;
+class Article extends ArticleInfo {
   content: string;
   constructor(data: ArticleType) {
-    this.id = data.id;
-    this.articleListId = data.articleListId;
-    this.title = data.title;
-    this.author = data.author;
-    this.createAt = new Date(data.createAt);
-    this.locale = LOCALE[data.locale as keyof typeof LOCALE];
+    super(data);
     this.content = data.content;
   }
 };

@@ -1,0 +1,30 @@
+.article-manager-container {
+  .row {
+    display: flex;
+    margin: 10px;
+  }
+  .manage-item {
+    label {
+      flex-basis: 80px;
+    }
+    input, select, textarea {
+      width: 70%;
+    }
+    textarea {
+      height: 400px;
+    }
+  }
+  .buttons-container {
+    button {
+      margin: 10px;
+    }
+  }
+  .notifications-container {
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+  }
+}

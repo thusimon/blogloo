@@ -40,6 +40,8 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers(HttpMethod.POST, "/auth/token")
                 .permitAll()
+                .antMatchers(HttpMethod.POST, "/auth/validate")
+                .permitAll()
                 .antMatchers("/", "/static/**", "/manifest.json", "/*.png")
                 .permitAll()
                 .anyRequest()

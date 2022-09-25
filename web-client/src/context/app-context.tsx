@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useReducer, ReactNode } from "react";
+import ArticleInfo from "../model/ArticleInfo";
 import { LOCALE } from "../types";
 
 export interface ContextDataType {
   locale: LOCALE;
   articleId: string;
   listId: string;
+  listArticles: ArticleInfo[];
   jwt: string;
 }
 
@@ -16,7 +18,7 @@ export enum Actions {
 
 export interface ActionType {
   type: Actions
-  data: object
+  data: any
 };
 
 export interface ContextType {
@@ -28,14 +30,20 @@ const initContextData: ContextDataType = {
   locale: LOCALE.en,
   articleId: '',
   listId: '',
-  jwt: ''
+  listArticles: [],
+  jwt: localStorage.getItem('jwt') || ''
 };
 
 const AppReducer = (state: ContextDataType, action: ActionType) => {
   const { type, data } = action;
   switch(type) {
-    case Actions.UpdateLocale:
-      return {...state, ...data};
+    case Actions.UpdateLocale: {
+      // check if list of articles exists
+      const locale = data.locale as LOCALE;
+      const articleByLocale = state.listArticles.find(article => article.locale === locale);
+      const articleId = articleByLocale ? articleByLocale.id : '';
+      return {...state, ...{locale, articleId}};
+    }
     case Actions.UpdateArticleAndListId:
       return {...state, ...data};
     case Actions.UpdateJWT:

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import DropDown from './DropDown';
 import { LOCALE } from '../types';
 import { default as ArticleInfoModel } from '../model/ArticleInfo';
 import { useAppContext, Actions } from '../context/app-context';
@@ -42,7 +41,7 @@ const ArticleInfo = ({articles, listId}: ArtileInfoPropsType) => {
   const updateLocale = (locale: LOCALE) => {
     const article = getArticleByLocale(locale, articles);
     setArticleLocale(locale);
-    updateArticleAndListId(article ? article.id : '', listId);
+    updateArticleAndListId(article ? article.id : '', listId, articles);
   };
 
   const getLocalSelections = (articles: ArticleInfoModel[]) => {
@@ -58,8 +57,8 @@ const ArticleInfo = ({articles, listId}: ArtileInfoPropsType) => {
     </span>
   }
 
-  const updateArticleAndListId = (articleId: string, listId: string) => {
-    dispatch({type: Actions.UpdateArticleAndListId, data: {articleId, listId}});
+  const updateArticleAndListId = (articleId: string, listId: string, listArticles: ArticleInfoModel[]) => {
+    dispatch({type: Actions.UpdateArticleAndListId, data: {articleId, listId, listArticles}});
   }
 
   return <div className={`article-info-container ${listId === state.listId ? 'article-info-container-selected' : ''}`}>

@@ -12,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainApp />} />
           <Route path="/home" element={<MainApp />} />
+          <Route path="/admin/manage" element={<MainApp />} />
           <Route path="/admin/login" element={<AdminLogin />} />
         </Routes>
       </BrowserRouter>

@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -80,11 +81,15 @@ public class JwtUtil {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userDetails.getUsername());
+        return createToken(claims, userDetails);
     }
 
-    private String createToken(Map<String, Object> claims, String subject) {
+    private String createToken(Map<String, Object> claims, UserDetails userDetails) {
         long curTime = System.currentTimeMillis();
+        String subject = userDetails.getUsername();
+        List authorities = userDetails.getAuthorities()
+                .stream().map(authority -> authority.toString()).toList();
+        claims.put("rol", String.join(" ", authorities));
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
@@ -96,6 +101,17 @@ public class JwtUtil {
 
     public boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    }
+
+    public boolean validateTokenWithRole(String token, UserDetails userDetails, String role) {
+        Claims claims = extractAllClaims(token);
+        final String username = claims.getSubject();
+        final String roles = claims.get("rol", String.class);
+        final Date exp = claims.getExpiration();
+        return username != null && roles != null
+                && username.equals(userDetails.getUsername())
+                && roles.contains(role)
+                && exp.after(new Date());
     }
 }

@@ -9,6 +9,8 @@ export interface ArticleInfoType {
   locale: string;
 }
 
+export const FAKE_ID = '<ARTICLE_ID>';
+export const FAKE_LIST_ID = '<ARTICLE_LIST_ID>'
 class ArticleInfo {
   id: string;
   articleListId: string;
