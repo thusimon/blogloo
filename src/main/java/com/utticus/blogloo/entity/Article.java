@@ -7,18 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 public class Article {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(generator = "id-generator")
+    @GenericGenerator(name = "id-generator", strategy = "com.utticus.blogloo.entity.IDGenerator")
+    private String id;
 
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID articleListId;
+    private String articleListId;
 
     private String locale;
 
@@ -33,7 +30,7 @@ public class Article {
 
     public Article() {}
 
-    public Article(UUID articleListId, String locale, String title, String author, Date createAt, String content) {
+    public Article(String articleListId, String locale, String title, String author, Date createAt, String content) {
         this.articleListId = articleListId;
         this.locale = locale;
         this.title = title;
@@ -42,19 +39,19 @@ public class Article {
         this.content = content;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public UUID getArticleListId() {
+    public String getArticleListId() {
         return articleListId;
     }
 
-    public void setArticleListId(UUID articleListId) {
+    public void setArticleListId(String articleListId) {
         this.articleListId = articleListId;
     }
 

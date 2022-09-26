@@ -12,27 +12,26 @@ interface NotificationType {
   message?: string;
 };
 
-const ArticleContentManager = ({ article }: { article: Article}) => {
-  console.log(16, article);
+const ArticleContentManager = ({ article }: { article: Article | null}) => {
   const { state, dispatch } = useAppContext();
   const navigate = useNavigate();
-  const [id, setId] = useState(article.id);
-  const [listId, setListId] = useState(article.articleListId);
-  const [locale, setLocale] = useState(article.locale);
-  const [title, setTitle] = useState(article.title);
-  const [author, setAuthor] = useState(article.author);
-  const [createAt, setCreateAt] = useState(article.createAt.toISOString());
-  const [content, setContent] = useState(article.content);
+  const [id, setId] = useState(article ? article.id : FAKE_ID);
+  const [listId, setListId] = useState(article ? article.articleListId : FAKE_LIST_ID);
+  const [locale, setLocale] = useState(article ? article.locale : LOCALE.en);
+  const [title, setTitle] = useState(article ? article.title : '');
+  const [author, setAuthor] = useState(article ? article.author : '');
+  const [createAt, setCreateAt] = useState(article ? article.createAt.toISOString() : new Date().toISOString());
+  const [content, setContent] = useState(article ? article.content : '');
   const [notification, setNotification] = useState<NotificationType>({});
 
   useEffect(() => {
-    setId(article.id);
-    setListId(article.articleListId);
-    setLocale(article.locale);
-    setTitle(article.title);
-    setAuthor(article.author);
-    setCreateAt(article.createAt.toISOString());
-    setContent(article.content);
+    setId(article ? article.id : FAKE_ID);
+    setListId(state.listId);
+    setLocale(article ? article.locale : state.locale);
+    setTitle(article ? article.title : '');
+    setAuthor(article ? article.author : '');
+    setCreateAt(article ? article.createAt.toISOString() : new Date().toISOString());
+    setContent(article ? article.content : '');
   }, [article]);
 
   const updateArticle = async (createNewList: boolean) => {
@@ -79,6 +78,30 @@ const ArticleContentManager = ({ article }: { article: Article}) => {
     });
   };
 
+  const deleteArticle = async () => {
+    if (!id || id === FAKE_ID) {
+      setNotification({
+        type: 'warn',
+        message: 'Warning, can not delete article without id'
+      });
+      return;
+    }
+    const deleteResp = await fetch(`/api/article/full/${encodeURIComponent(id)}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${state.jwt}`
+      }
+    });
+    if (deleteResp.status !== 200) {
+      navigate('/admin/login');
+      return;
+    }
+    setNotification({
+      type: 'success',
+      message: `Success, article ${title} has been delete!`
+    });
+  }
+
   const handleLocaleChange = (value: string) => {
     setLocale(value as LOCALE);
     dispatch({type: Actions.UpdateLocale, data: {locale: value}});
@@ -120,6 +143,7 @@ const ArticleContentManager = ({ article }: { article: Article}) => {
     <div className='row buttons-container'>
       <button onClick={() => updateArticle(false)}>{!id || id === FAKE_ID ? 'Create' : 'Update'}</button>
       <button onClick={() => updateArticle(true)}>Create New List</button>
+      <button onClick={deleteArticle}>Delete</button>
     </div>
     <div className='row notifications-container'>
       <p className={notification.type}>{notification.message}</p>

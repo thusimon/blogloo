@@ -7,16 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-public interface ArticleRepo extends JpaRepository<Article, UUID> {
+public interface ArticleRepo extends JpaRepository<Article, String> {
     @Query(value = "SELECT id, article_list_id as articleListId, locale, title, author, create_at as createAt FROM Article where id=?1", nativeQuery = true)
-    Optional<ArticleInfoDTO> findInfoById(UUID uuid);
+    Optional<ArticleInfoDTO> findInfoById(String uuid);
 
     @Query(value = "SELECT id, article_list_id as articleListId, locale, title, author, create_at as createAt FROM Article", nativeQuery = true)
     List<ArticleInfoDTO> findAllInfo();
 
-    Optional<Article> findById(UUID uuid);
+    Optional<Article> findById(String id);
 
 
 }

@@ -44,10 +44,12 @@ const AppReducer = (state: ContextDataType, action: ActionType) => {
       const articleId = articleByLocale ? articleByLocale.id : '';
       return {...state, ...{locale, articleId}};
     }
-    case Actions.UpdateArticleAndListId:
+    case Actions.UpdateArticleAndListId: {
       return {...state, ...data};
-    case Actions.UpdateJWT:
+    }
+    case Actions.UpdateJWT: {
       return {...state, ...data};
+    }
     default:
       return state
   }

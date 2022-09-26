@@ -33,7 +33,12 @@ const getArticleByLocale = (locale: LOCALE, articles: ArticleInfoModel[]): Artic
 
 const ArticleInfo = ({articles, listId}: ArtileInfoPropsType) => {
   const { state, dispatch } = useAppContext();
-  const [articleLocale, setArticleLocale] = useState(LOCALE.en);
+  const [articleLocale, setArticleLocale] = useState(() => {
+    const firstExistlocale = (Object.keys(LOCALE) as LOCALE[]).find(locale => {
+      return articles.find(article => article.locale === locale);
+    });
+    return firstExistlocale ? LOCALE[firstExistlocale] : LOCALE.en;
+  });
   const [localeToggle, setLocaleToggle] = useState(false);
 
   const article = getArticleByLocale(articleLocale, articles);
