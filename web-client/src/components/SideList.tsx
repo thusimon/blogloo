@@ -44,9 +44,6 @@ const SideList = () => {
       <div className='side-list-info'>
         {articles.map((articleGroup, idx) => <ArticleInfo key={`article-info-group-${idx}`} articles={articleGroup} listId={articleGroup[0].articleListId} />)}
       </div>
-      <div className='side-list-footer'>
-        <button>+</button>
-      </div>
     </div>
   );
 }
