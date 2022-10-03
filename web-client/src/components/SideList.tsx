@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ArticleInfo from './ArticleInfo';
-import { default as ArticleInfoModel, ArticleInfoType } from '../model/ArticleInfo';
+import ArticleInfoModel, { ArticleInfoType } from '../model/ArticleInfo';
 import { groupBy } from '../utils';
 
 import './SideList.scss';
 
-const SideList = () => {
+const SideList = (): JSX.Element => {
   const [articles, setArticles] = useState([] as ArticleInfoModel[][]);
 
   /**
@@ -29,14 +29,14 @@ const SideList = () => {
   };
 
   useEffect(() => {
-    const getArticles = async () => {
+    const getArticles = async (): Promise<void> => {
       const articleInfoRequest = await fetch('/api/article/all');
       const articleResp = await articleInfoRequest.json() as ArticleInfoType[];
       const articleInfos = articleResp.map(article => new ArticleInfoModel(article));
       const sortedGroupedArticles = groupArticlesByListId(articleInfos);
       setArticles(sortedGroupedArticles);
-    }
-    getArticles();
+    };
+    void getArticles();
   }, []);
 
   return (
@@ -46,6 +46,6 @@ const SideList = () => {
       </div>
     </div>
   );
-}
-  
+};
+
 export default SideList;

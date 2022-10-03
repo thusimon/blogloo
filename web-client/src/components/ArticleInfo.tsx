@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { LOCALE } from '../types';
-import { default as ArticleInfoModel } from '../model/ArticleInfo';
+import ArticleInfoModel from '../model/ArticleInfo';
 import { useAppContext, Actions } from '../context/app-context';
 
 import usFlag from '../assets/images/us.svg';
@@ -10,8 +10,8 @@ import cnFlag from '../assets/images/cn.svg';
 import './ArticleInfo.scss';
 
 export interface ArtileInfoPropsType {
-  articles: ArticleInfoModel[];
-  listId: string;
+  articles: ArticleInfoModel[]
+  listId: string
 }
 
 export const localeMapping = {
@@ -31,7 +31,7 @@ export const localeMapping = {
 
 const getArticleByLocale = (locale: LOCALE, articles: ArticleInfoModel[]): ArticleInfoModel | undefined => articles.find(article => article.locale === locale);
 
-const ArticleInfo = ({articles, listId}: ArtileInfoPropsType) => {
+const ArticleInfo = ({ articles, listId }: ArtileInfoPropsType): JSX.Element => {
   const { state, dispatch } = useAppContext();
   const [articleLocale, setArticleLocale] = useState(() => {
     const firstExistlocale = (Object.keys(LOCALE) as LOCALE[]).find(locale => {
@@ -43,28 +43,28 @@ const ArticleInfo = ({articles, listId}: ArtileInfoPropsType) => {
 
   const article = getArticleByLocale(articleLocale, articles);
 
-  const updateLocale = (locale: LOCALE) => {
+  const updateLocale = (locale: LOCALE): void => {
     const article = getArticleByLocale(locale, articles);
     setArticleLocale(locale);
     updateArticleAndListId(article ? article.id : '', listId, articles);
   };
 
-  const getLocalSelections = (articles: ArticleInfoModel[]) => {
-    const locales = Object.keys(LOCALE) as LOCALE[]
+  const getLocalSelections = (articles: ArticleInfoModel[]): JSX.Element => {
+    const locales = Object.keys(LOCALE) as LOCALE[];
     const filteredLocales = locales.filter(locale => articles.findIndex(article => locale === article.locale) > -1);
     return <span className={`grid-locale grid-cell ${localeToggle ? 'grid-show' : 'grid-hide'}`}>
       {filteredLocales.map(locale => {
         const { img, name } = localeMapping[locale];
         return <img src={img} title={name} alt={name} key={locale} data-se={locale}
           className={locale === articleLocale ? 'icon selected' : 'icon'}
-          onClick={evt => { evt.stopPropagation(); updateLocale(locale); }}></img>
+          onClick={evt => { evt.stopPropagation(); updateLocale(locale); }}></img>;
       })}
-    </span>
-  }
+    </span>;
+  };
 
-  const updateArticleAndListId = (articleId: string, listId: string, listArticles: ArticleInfoModel[]) => {
-    dispatch({type: Actions.UpdateArticleAndListId, data: {articleId, listId, listArticles}});
-  }
+  const updateArticleAndListId = (articleId: string, listId: string, listArticles: ArticleInfoModel[]): void => {
+    dispatch({ type: Actions.UpdateArticleAndListId, data: { articleId, listId, listArticles } });
+  };
 
   return <div className={`article-info-container ${listId === state.listId ? 'article-info-container-selected' : ''}`}>
     <div className='article-info-basic' onClick={() => updateLocale(articleLocale)}>
@@ -80,7 +80,7 @@ const ArticleInfo = ({articles, listId}: ArtileInfoPropsType) => {
         data-se={articleLocale}
         onClick={() => setLocaleToggle(!localeToggle)}></img>
     </div>
-  </div>
-}
+  </div>;
+};
 
 export default ArticleInfo;

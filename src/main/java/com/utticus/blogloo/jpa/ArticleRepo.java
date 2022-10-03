@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ArticleRepo extends JpaRepository<Article, String> {
-    @Query(value = "SELECT id, article_list_id as articleListId, locale, title, author, create_at as createAt FROM Article where id=?1", nativeQuery = true)
+    @Query(value = "SELECT id, article_list_id as articleListId, locale, title, author, create_at as createAt FROM article where id=?1", nativeQuery = true)
     Optional<ArticleInfoDTO> findInfoById(String uuid);
 
-    @Query(value = "SELECT id, article_list_id as articleListId, locale, title, author, create_at as createAt FROM Article", nativeQuery = true)
+    @Query(value = "SELECT id, article_list_id as articleListId, locale, title, author, create_at as createAt FROM article", nativeQuery = true)
     List<ArticleInfoDTO> findAllInfo();
 
     Optional<Article> findById(String id);

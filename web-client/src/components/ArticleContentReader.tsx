@@ -1,9 +1,8 @@
-import React from 'react';
 import Article from '../model/Article';
 
 import './ArticleContentReader.scss';
 
-const ArticleContentReader = ({ article }: { article: Article}) => {
+const ArticleContentReader = ({ article }: { article: Article }): JSX.Element => {
   return <div className='article-container'>
     <div className='article-title'>
       {article.title}
@@ -17,7 +16,7 @@ const ArticleContentReader = ({ article }: { article: Article}) => {
         <div className='article-create-at'>{article.createAt.toLocaleDateString('en')}</div>
       </div>
     </div>
-  </div>
+  </div>;
 };
 
 export default ArticleContentReader;

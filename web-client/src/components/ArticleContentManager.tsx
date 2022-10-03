@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Actions, useAppContext } from '../context/app-context';
 import { LOCALE } from '../types';
@@ -8,11 +8,11 @@ import './ArticleContentManager.scss';
 import { FAKE_ID, FAKE_LIST_ID } from '../model/ArticleInfo';
 
 interface NotificationType {
-  type?: string;
-  message?: string;
+  type?: string
+  message?: string
 };
 
-const ArticleContentManager = ({ article }: { article: Article | null}) => {
+const ArticleContentManager = ({ article }: { article: Article | null }): JSX.Element => {
   const { state, dispatch } = useAppContext();
   const navigate = useNavigate();
   const [id, setId] = useState(article ? article.id : FAKE_ID);
@@ -34,7 +34,7 @@ const ArticleContentManager = ({ article }: { article: Article | null}) => {
     setContent(article ? article.content : '');
   }, [article]);
 
-  const updateArticle = async (createNewList: boolean) => {
+  const updateArticle = async (createNewList: boolean): Promise<void> => {
     const payload: any = {
       locale,
       title,
@@ -55,14 +55,14 @@ const ArticleContentManager = ({ article }: { article: Article | null}) => {
     }
     if (createNewList) {
       method = 'POST';
-      delete payload['id'];
-      delete payload['articleListId'];
+      delete payload.id;
+      delete payload.articleListId;
     }
     const updateResp = await fetch('/api/article/full', {
       method,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${state.jwt}`
+        Authorization: `Bearer ${state.jwt}`
       },
       body: JSON.stringify(payload)
     });
@@ -78,7 +78,7 @@ const ArticleContentManager = ({ article }: { article: Article | null}) => {
     });
   };
 
-  const deleteArticle = async () => {
+  const deleteArticle = async (): Promise<void> => {
     if (!id || id === FAKE_ID) {
       setNotification({
         type: 'warn',
@@ -89,7 +89,7 @@ const ArticleContentManager = ({ article }: { article: Article | null}) => {
     const deleteResp = await fetch(`/api/article/full/${encodeURIComponent(id)}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${state.jwt}`
+        Authorization: `Bearer ${state.jwt}`
       }
     });
     if (deleteResp.status !== 200) {
@@ -100,11 +100,11 @@ const ArticleContentManager = ({ article }: { article: Article | null}) => {
       type: 'success',
       message: `Success, article ${title} has been delete!`
     });
-  }
+  };
 
-  const handleLocaleChange = (value: string) => {
+  const handleLocaleChange = (value: string): void => {
     setLocale(value as LOCALE);
-    dispatch({type: Actions.UpdateLocale, data: {locale: value}});
+    dispatch({ type: Actions.UpdateLocale, data: { locale: value } });
   };
 
   return <div className='article-manager-container'>
@@ -120,7 +120,7 @@ const ArticleContentManager = ({ article }: { article: Article | null}) => {
       <label htmlFor='locale'>Locale</label>
       <select id='locale' value={locale} onChange={evt => handleLocaleChange(evt.target.value)}>
         {Object.keys(LOCALE).map(l => {
-          return <option key={l} value={l}>{l}</option>
+          return <option key={l} value={l}>{l}</option>;
         })}
       </select>
     </div>
@@ -141,14 +141,14 @@ const ArticleContentManager = ({ article }: { article: Article | null}) => {
       <textarea id='Content' value={content} onChange={evt => setContent(evt.target.value)} />
     </div>
     <div className='row buttons-container'>
-      <button onClick={() => updateArticle(false)}>{!id || id === FAKE_ID ? 'Create' : 'Update'}</button>
-      <button onClick={() => updateArticle(true)}>Create New List</button>
-      <button onClick={deleteArticle}>Delete</button>
+      <button onClick={() => { void updateArticle(false); }}>{!id || id === FAKE_ID ? 'Create' : 'Update'}</button>
+      <button onClick={() => { void updateArticle(true); }}>Create New List</button>
+      <button onClick={() => { void deleteArticle(); }}>Delete</button>
     </div>
     <div className='row notifications-container'>
       <p className={notification.type}>{notification.message}</p>
     </div>
-  </div>
+  </div>;
 };
 
 export default ArticleContentManager;

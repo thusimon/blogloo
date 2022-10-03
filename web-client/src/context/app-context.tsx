@@ -1,13 +1,13 @@
-import React, { createContext, useContext, useReducer, ReactNode } from "react";
-import ArticleInfo from "../model/ArticleInfo";
-import { LOCALE } from "../types";
+import { createContext, useContext, useReducer, ReactNode, ReactElement } from 'react';
+import ArticleInfo from '../model/ArticleInfo';
+import { LOCALE } from '../types';
 
 export interface ContextDataType {
-  locale: LOCALE;
-  articleId: string;
-  listId: string;
-  listArticles: ArticleInfo[];
-  jwt: string;
+  locale: LOCALE
+  articleId: string
+  listId: string
+  listArticles: ArticleInfo[]
+  jwt: string
 }
 
 export enum Actions {
@@ -22,8 +22,8 @@ export interface ActionType {
 };
 
 export interface ContextType {
-  state: ContextDataType;
-  dispatch: (message: ActionType) => void;
+  state: ContextDataType
+  dispatch: (message: ActionType) => void
 }
 
 const initContextData: ContextDataType = {
@@ -31,47 +31,47 @@ const initContextData: ContextDataType = {
   articleId: '',
   listId: '',
   listArticles: [],
-  jwt: localStorage.getItem('jwt') || ''
+  jwt: localStorage.getItem('jwt') ?? ''
 };
 
-const AppReducer = (state: ContextDataType, action: ActionType) => {
+const AppReducer = (state: ContextDataType, action: ActionType): ContextDataType => {
   const { type, data } = action;
-  switch(type) {
+  switch (type) {
     case Actions.UpdateLocale: {
       // check if list of articles exists
       const locale = data.locale as LOCALE;
       const articleByLocale = state.listArticles.find(article => article.locale === locale);
       const articleId = articleByLocale ? articleByLocale.id : '';
-      return {...state, ...{locale, articleId}};
+      return { ...state, ...{ locale, articleId } };
     }
     case Actions.UpdateArticleAndListId: {
-      return {...state, ...data};
+      return { ...state, ...data };
     }
     case Actions.UpdateJWT: {
-      return {...state, ...data};
+      return { ...state, ...data };
     }
     default:
-      return state
+      return state;
   }
 };
 
-const AppContext = createContext({} as any);
+const AppContext = createContext<ContextType>({} as any);
 
 interface ProviderPropType {
-  children: ReactNode;
+  children: ReactNode
 };
 
-export const AppContextProvider = ({children}: ProviderPropType) => {
-  const [state, dispatch] = useReducer(AppReducer, initContextData)
+export const AppContextProvider = ({ children }: ProviderPropType): ReactElement => {
+  const [state, dispatch] = useReducer(AppReducer, initContextData);
   // NOTE: you *might* need to memoize this value
-  const value = {state, dispatch}
+  const value = { state, dispatch };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
 export const useAppContext = (): ContextType => {
-  const context = useContext(AppContext)
+  const context = useContext(AppContext);
   if (context === undefined) {
-    throw new Error('useAppContext must be used within a AppContextProvider')
+    throw new Error('useAppContext must be used within a AppContextProvider');
   }
-  return context
+  return context;
 };

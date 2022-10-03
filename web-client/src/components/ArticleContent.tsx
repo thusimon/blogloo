@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAppContext } from '../context/app-context';
 import Article, { ArticleType } from '../model/Article';
@@ -6,14 +6,14 @@ import ArticleContentManager from './ArticleContentManager';
 import ArticleContentReader from './ArticleContentReader';
 import Welcome from './Welcome';
 
-const ArticleContent = () => {
+const ArticleContent = (): JSX.Element => {
   const { state } = useAppContext();
   const location = useLocation();
 
-  const [ article, setArticle ] = useState<Article | null>(null);
+  const [article, setArticle] = useState<Article | null>(null);
 
   useEffect(() => {
-    const getArticleFullByid = async (id: string) => {
+    const getArticleFullByid = async (id: string = ''): Promise<void> => {
       if (!id) {
         setArticle(null);
       } else {
@@ -22,9 +22,9 @@ const ArticleContent = () => {
         const article = new Article(articleResp);
         setArticle(article);
       }
-    }
-    getArticleFullByid(state.articleId);
-  }, [state.articleId])
+    };
+    void getArticleFullByid(state.articleId);
+  }, [state.articleId]);
 
   return state.jwt && location.pathname === '/admin/manage'
     ? <ArticleContentManager article={article} />

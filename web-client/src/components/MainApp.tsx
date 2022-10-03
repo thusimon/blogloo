@@ -1,11 +1,10 @@
-import React from 'react';
 import Head from './Head';
 import SideList from './SideList';
 import ArticleContent from './ArticleContent';
 
 import './MainApp.scss';
 
-const MainApp = () => {
+const MainApp = (): JSX.Element => {
   return <div className="app">
     <div className='app-header-container'>
       <Head />
@@ -14,7 +13,7 @@ const MainApp = () => {
       <SideList />
       <ArticleContent />
     </div>
-  </div>
+  </div>;
 };
 
 export default MainApp;

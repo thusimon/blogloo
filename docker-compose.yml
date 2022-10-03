@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  server:
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: "mysql:8.0.30"
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=pd
+      - MYSQL_DATABASE=blogloo
+      - MYSQL_USER=sa
+      - MYSQL_PASSWORD=pd
