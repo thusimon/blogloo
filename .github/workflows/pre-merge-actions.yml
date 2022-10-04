@@ -10,8 +10,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16.17.1'
-      - run: cd web-client
-      - name: Install modules
-        run: npm install
-      - name: Run eslint
-        run: npm run lint
+      - name: List folder
+        run: ls
+        run: pwd
+      # - name: Install modules
+      #   run: npm install
+      # - name: Run eslint
+      #   run: npm run lint
