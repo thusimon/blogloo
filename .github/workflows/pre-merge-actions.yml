@@ -12,6 +12,7 @@ jobs:
           node-version: '16.17.1'
       - name: List folder
         run: ls
+      - name: Print pwd
         run: pwd
       # - name: Install modules
       #   run: npm install
