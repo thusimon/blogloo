@@ -2,19 +2,18 @@ name: pre-merge-actions
 run-name: ${{ github.actor }} pre-merge actions
 on: [push]
 jobs:
-  jest:
-    name: jest
+  lint:
+    name: lint
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web-client
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: '16.17.1'
-      - name: List folder
-        run: ls
-      - name: Print pwd
-        run: pwd
-      # - name: Install modules
-      #   run: npm install
-      # - name: Run eslint
-      #   run: npm run lint
+      - name: Install modules
+        run: npm install
+      - name: Run eslint
+        run: npm run lint
