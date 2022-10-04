@@ -12,6 +12,6 @@ jobs:
           node-version: '16.17.1'
       - run: cd web-client
       - name: Install modules
-      - run: npm install
+        run: npm install
       - name: Run eslint
-      - run: npm run lint
+        run: npm run lint
