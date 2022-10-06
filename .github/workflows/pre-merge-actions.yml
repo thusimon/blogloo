@@ -3,9 +3,6 @@ run-name: ${{ github.actor }} pre-merge actions
 on:
   pull_request:
     types: [opened, reopened]
-    branches-ignore:
-      - 'main**'
-      - 'release**'
 jobs:
   maven-test:
     name: maven-test
