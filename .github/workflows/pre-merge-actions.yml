@@ -5,6 +5,7 @@ on:
     types: [opened, reopened]
 jobs:
   maven-test:
+    if: !startsWith(github.ref_name, 'qdev-')
     name: maven-test
     runs-on: ubuntu-latest
     steps:
@@ -18,6 +19,7 @@ jobs:
       - name: Test with Maven
         run: mvn --batch-mode --update-snapshots test
   ui-lint:
+    if: !startsWith(github.ref_name, 'qdev-')
     name: ui-lint
     runs-on: ubuntu-latest
     defaults:
@@ -36,6 +38,7 @@ jobs:
       - name: Run eslint
         run: yarn lint
   ui-unit-test:
+    if: !startsWith(github.ref_name, 'qdev-')
     name: ui-unit-test
     runs-on: ubuntu-latest
     defaults:
