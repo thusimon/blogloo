@@ -16,6 +16,10 @@ jobs:
           java-version: '17'
           distribution: 'corretto'
           cache: maven
+      - name: test ref_name
+        run: echo ${{ github.event.pull_request.head.ref }}
+      - name: test ref_name2
+        run: echo ${{ !startsWith(github.event.pull_request.head.ref, 'qdev-') }}
       - name: Test with Maven
         run: mvn --batch-mode --update-snapshots test
   ui-lint:
