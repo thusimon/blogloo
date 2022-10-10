@@ -107,7 +107,7 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
     dispatch({ type: Actions.UpdateLocale, data: { locale: value } });
   };
 
-  return <div className='article-manager-container'>
+  return <div className='article-manager-container right-content-container'>
     <div className='row manage-item'>
       <label htmlFor='id'>ID</label>
       <input id='id' value={id} readOnly disabled/>

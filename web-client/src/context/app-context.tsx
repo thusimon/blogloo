@@ -8,12 +8,14 @@ export interface ContextDataType {
   listId: string
   listArticles: ArticleInfo[]
   jwt: string
+  sideExpand: boolean
 }
 
 export enum Actions {
   UpdateLocale,
   UpdateArticleAndListId,
-  UpdateJWT
+  UpdateJWT,
+  ToggleSideList
 };
 
 export interface ActionType {
@@ -31,7 +33,8 @@ const initContextData: ContextDataType = {
   articleId: '',
   listId: '',
   listArticles: [],
-  jwt: localStorage.getItem('jwt') ?? ''
+  jwt: localStorage.getItem('jwt') ?? '',
+  sideExpand: true
 };
 
 const AppReducer = (state: ContextDataType, action: ActionType): ContextDataType => {
@@ -49,6 +52,9 @@ const AppReducer = (state: ContextDataType, action: ActionType): ContextDataType
     }
     case Actions.UpdateJWT: {
       return { ...state, ...data };
+    }
+    case Actions.ToggleSideList: {
+      return { ...state, ...{ sideExpand: !state.sideExpand } };
     }
     default:
       return state;

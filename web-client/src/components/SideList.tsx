@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
+import { Actions, useAppContext } from '../context/app-context';
 import ArticleInfo from './ArticleInfo';
 import ArticleInfoModel, { ArticleInfoType } from '../model/ArticleInfo';
 import { groupBy } from '../utils';
+import ListIcon from '../assets/images/list.svg';
 
 import './SideList.scss';
 
 const SideList = (): JSX.Element => {
+  const { dispatch } = useAppContext();
   const [articles, setArticles] = useState([] as ArticleInfoModel[][]);
 
   /**
@@ -28,6 +31,10 @@ const SideList = (): JSX.Element => {
     return sortedGroupedKeys.map(key => groupedArticles[key]);
   };
 
+  const toggleClickHandler = (): void => {
+    dispatch({ type: Actions.ToggleSideList, data: {} });
+  };
+
   useEffect(() => {
     const getArticles = async (): Promise<void> => {
       const articleInfoRequest = await fetch('/api/article/all');
@@ -41,6 +48,9 @@ const SideList = (): JSX.Element => {
 
   return (
     <div className='side-list-container'>
+      <div className='side-list-toggle'>
+        <img src={ListIcon} title='Toggle' alt='Toggle' onClick={toggleClickHandler}/>
+      </div>
       <div className='side-list-info'>
         {articles.map((articleGroup, idx) => <ArticleInfo key={`article-info-group-${idx}`} articles={articleGroup} listId={articleGroup[0].articleListId} />)}
       </div>
