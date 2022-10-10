@@ -3,7 +3,7 @@ import Article from '../model/Article';
 import './ArticleContentReader.scss';
 
 const ArticleContentReader = ({ article }: { article: Article }): JSX.Element => {
-  return <div className='article-container'>
+  return <div className='article-container right-content-container'>
     <div className='article-title'>
       {article.title}
     </div>
