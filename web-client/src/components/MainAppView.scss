@@ -1,0 +1,6 @@
+.app-main-view-container {
+  background-color: floralwhite;
+  display: grid;
+  grid-template-columns: 30px auto;
+  height: calc(100vh - 30px);
+}

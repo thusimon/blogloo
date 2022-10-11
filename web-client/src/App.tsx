@@ -1,5 +1,6 @@
 import { AppContextProvider } from './context/app-context';
 import MainApp from './components/MainApp';
+import MainAppView from './components/MainAppView';
 import AdminLogin from './components/AdminLogin';
 import { Routes, Route, HashRouter } from 'react-router-dom';
 
@@ -11,7 +12,7 @@ function App (): JSX.Element {
       <HashRouter>
         <Routes>
           <Route path="/" element={<MainApp />} />
-          <Route path="/home" element={<MainApp />} />
+          <Route path="/view/:id" element={<MainAppView />} />
           <Route path="/admin/manage" element={<MainApp />} />
           <Route path="/admin/login" element={<AdminLogin />} />
         </Routes>

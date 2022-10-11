@@ -47,6 +47,12 @@ public class ArticleController {
         return articleRepo.findInfoById(id);
     }
 
+    @GetMapping(value = "/infolist/{listId}")
+    @ResponseBody
+    public List<ArticleInfoDTO> getInfoByListId(@PathVariable String listId) {
+        return articleRepo.findInfoByListId(listId);
+    }
+
     @PostMapping(value = "/full")
     @ResponseBody
     public Article addArticle(@RequestBody Article article) {
