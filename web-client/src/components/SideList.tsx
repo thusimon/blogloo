@@ -49,7 +49,7 @@ const SideList = (): JSX.Element => {
   return (
     <div className='side-list-container'>
       <div className='side-list-toggle'>
-        <img src={ListIcon} title='Toggle' alt='Toggle' onClick={toggleClickHandler}/>
+        <img src={ListIcon} title='Toggle List' alt='Toggle' onClick={toggleClickHandler}/>
       </div>
       <div className='side-list-info'>
         {articles.map((articleGroup, idx) => <ArticleInfo key={`article-info-group-${idx}`} articles={articleGroup} listId={articleGroup[0].articleListId} />)}

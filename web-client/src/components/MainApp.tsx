@@ -10,7 +10,7 @@ const MainApp = (): JSX.Element => {
   const listClass = state.sideExpand ? '' : 'hide-sidelist';
   return <div className="app">
     <div className='app-header-container'>
-      <Head />
+      <Head locale={false} />
     </div>
     <div className={`app-main-container ${listClass}`}>
       <SideList />
