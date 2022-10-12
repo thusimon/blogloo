@@ -51,7 +51,7 @@ const ArticleInfo = ({ articles, listId }: ArtileInfoPropsType): JSX.Element => 
 
   const getLocalSelections = (articles: ArticleInfoModel[]): JSX.Element => {
     const locales = Object.keys(LOCALE) as LOCALE[];
-    const filteredLocales = locales.filter(locale => articles.findIndex(article => locale === article.locale) > -1);
+    const filteredLocales = locales.filter(locale => articles.find(article => locale === article.locale));
     return <span className={`grid-locale grid-cell ${localeToggle ? 'grid-show' : 'grid-hide'}`}>
       {filteredLocales.map(locale => {
         const { img, name } = localeMapping[locale];

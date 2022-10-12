@@ -1,6 +1,13 @@
 .app-main-view-container {
   background-color: floralwhite;
-  display: grid;
-  grid-template-columns: 30px auto;
+  overflow-y: auto;
   height: calc(100vh - 30px);
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    img {
+      width: 40%;
+    }
+  }
 }

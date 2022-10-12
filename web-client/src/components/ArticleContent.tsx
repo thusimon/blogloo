@@ -26,7 +26,7 @@ const ArticleContent = (): JSX.Element => {
     void getArticleFullByid(state.articleId);
   }, [state.articleId]);
 
-  return state.jwt && location.pathname === '/admin/manage'
+  return state.jwt && location.pathname === '/internal/admin/manage'
     ? <ArticleContentManager article={article} />
     : (article
         ? <ArticleContentReader article={article} />
