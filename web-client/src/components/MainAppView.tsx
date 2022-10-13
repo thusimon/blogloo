@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppContext, Actions } from '../context/app-context';
+import { LOCALE } from '../types';
 import ArticleInfo, { ArticleInfoType } from '../model/ArticleInfo';
 import Article, { ArticleType } from '../model/Article';
 import Head from './Head';
@@ -19,20 +20,25 @@ const MainAppView = (): JSX.Element => {
     dispatch({ type: Actions.UpdateArticleAndListId, data: { articleId, listId, listArticles } });
   };
 
+  const getArticle = async (id: string): Promise<void> => {
+    const articleRequest = await fetch(`/api/article/full/${encodeURIComponent(id)}`);
+    const articleResp = await articleRequest.json() as ArticleType;
+    const article = new Article(articleResp);
+    setArticle(article);
+  };
+
   useEffect(() => {
     const getArticlesByListId = async (listId: string = ''): Promise<void> => {
       if (listId !== '') {
         const articlesInfoRequest = await fetch(`/api/article/infolist/${encodeURIComponent(listId)}`);
         const articlesInfoResp = await articlesInfoRequest.json() as ArticleInfoType[];
-        const articlesInfo = articlesInfoResp.map(articleInfo => new ArticleInfo(articleInfo));
+        const localeKeys = Object.keys(LOCALE);
+        const articlesInfo = articlesInfoResp.map(articleInfo => new ArticleInfo(articleInfo))
+          .sort((a, b) => localeKeys.indexOf(a.locale) - localeKeys.indexOf(b.locale));
         if (articlesInfo.length > 0) {
           const firstInfo = articlesInfo[0];
           updateArticleAndListId(firstInfo.id, listId, articlesInfo);
-          const articleRequest = await fetch(`/api/article/full/${encodeURIComponent(firstInfo.id)}`);
-          const articleResp = await articleRequest.json() as ArticleType;
-          const article = new Article(articleResp);
-          console.log(34, article);
-          setArticle(article);
+          await getArticle(firstInfo.id);
         }
       }
     };
@@ -40,6 +46,12 @@ const MainAppView = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
+    setArticle(null);
+    const articleInfo = state.listArticles.find(article => article.locale === state.locale);
+    if (!articleInfo) {
+      return;
+    }
+    void getArticle(articleInfo.id);
   }, [state.locale]);
 
   return <div className="app">
