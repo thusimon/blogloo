@@ -1,4 +1,4 @@
-package com.utticus.blogloo.security;
+package com.utticus.blogloo.config;
 
 import com.utticus.blogloo.filter.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
