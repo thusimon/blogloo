@@ -1,4 +1,4 @@
-package com.utticus.blogloo.security;
+package com.utticus.blogloo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
