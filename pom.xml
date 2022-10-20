@@ -128,6 +128,17 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
+				<!-- mvn flyway:repair -->
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>8.5.13</version>
+				<configuration>
+					<url>jdbc:mysql://localhost:3306/blogloo</url>
+					<user>sa</user>
+					<password>pd</password>
+				</configuration>
+			</plugin>
+			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
 					<execution>
