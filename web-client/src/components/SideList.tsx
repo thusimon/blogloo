@@ -37,7 +37,7 @@ const SideList = (): JSX.Element => {
 
   useEffect(() => {
     const getArticles = async (): Promise<void> => {
-      const articleInfoRequest = await fetch('/api/article/all');
+      const articleInfoRequest = await fetch('/api/user/article/all');
       const articleResp = await articleInfoRequest.json() as ArticleInfoType[];
       const articleInfos = articleResp.map(article => new ArticleInfoModel(article));
       const sortedGroupedArticles = groupArticlesByListId(articleInfos);

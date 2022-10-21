@@ -21,7 +21,7 @@ const MainAppView = (): JSX.Element => {
   };
 
   const getArticle = async (id: string): Promise<void> => {
-    const articleRequest = await fetch(`/api/article/full/${encodeURIComponent(id)}`);
+    const articleRequest = await fetch(`/api/user/article/full/${encodeURIComponent(id)}`);
     const articleResp = await articleRequest.json() as ArticleType;
     const article = new Article(articleResp);
     setArticle(article);
