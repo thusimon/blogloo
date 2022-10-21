@@ -25,17 +25,20 @@ public class Article {
 
     private Date createAt;
 
+    private boolean visible;
+
     @Column(columnDefinition = "TEXT")
     private String content;
 
     public Article() {}
 
-    public Article(String articleListId, String locale, String title, String author, Date createAt, String content) {
+    public Article(String articleListId, String locale, String title, String author, Date createAt, boolean visible, String content) {
         this.articleListId = articleListId;
         this.locale = locale;
         this.title = title;
         this.author = author;
         this.createAt = createAt;
+        this.visible = visible;
         this.content = content;
     }
 
@@ -85,6 +88,14 @@ public class Article {
 
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public String getContent() {

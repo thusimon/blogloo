@@ -58,7 +58,7 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
       delete payload.id;
       delete payload.articleListId;
     }
-    const updateResp = await fetch('/api/article/full', {
+    const updateResp = await fetch('/api/admin/article/full', {
       method,
       headers: {
         'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
       });
       return;
     }
-    const deleteResp = await fetch(`/api/article/full/${encodeURIComponent(id)}`, {
+    const deleteResp = await fetch(`/api/admin/article/full/${encodeURIComponent(id)}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${state.jwt}`
