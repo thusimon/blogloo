@@ -90,7 +90,7 @@ public class Article {
         this.createAt = createAt;
     }
 
-    public boolean isVisible() {
+    public boolean getVisible() {
         return visible;
     }
 

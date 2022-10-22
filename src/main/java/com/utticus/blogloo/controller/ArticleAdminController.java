@@ -1,6 +1,7 @@
 package com.utticus.blogloo.controller;
 
 import com.utticus.blogloo.entity.Article;
+import com.utticus.blogloo.entity.ArticleInfoDTO;
 import com.utticus.blogloo.entity.IDGenerator;
 import com.utticus.blogloo.jpa.ArticleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -28,6 +30,12 @@ public class ArticleAdminController {
     @Autowired
     IDGenerator idGenerator;
 
+    @GetMapping(value = "/all")
+    @ResponseBody
+    public List<ArticleInfoDTO> getAll() {
+        return articleRepo.findAllInfo();
+    }
+    
     @GetMapping(value = "/full/{id}")
     @ResponseBody
     public Optional<Article> getById(@PathVariable String id) {
