@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Actions, useAppContext } from '../context/app-context';
 import ArticleInfo from './ArticleInfo';
 import ArticleInfoModel, { ArticleInfoType } from '../model/ArticleInfo';
@@ -8,7 +9,8 @@ import ListIcon from '../assets/images/list.svg';
 import './SideList.scss';
 
 const SideList = (): JSX.Element => {
-  const { dispatch } = useAppContext();
+  const { state, dispatch } = useAppContext();
+  const location = useLocation();
   const [articles, setArticles] = useState([] as ArticleInfoModel[][]);
 
   /**
@@ -36,14 +38,25 @@ const SideList = (): JSX.Element => {
   };
 
   useEffect(() => {
-    const getArticles = async (): Promise<void> => {
-      const articleInfoRequest = await fetch('/api/user/article/all');
+    const getArticles = async (isAdmin: boolean): Promise<void> => {
+      const url = `/api/${isAdmin ? 'admin' : 'user'}/article/all`;
+      const options = {
+        method: 'GET'
+      };
+      isAdmin && Object.assign(options, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${state.jwt}`
+        }
+      });
+      const articleInfoRequest = await fetch(url, options);
       const articleResp = await articleInfoRequest.json() as ArticleInfoType[];
       const articleInfos = articleResp.map(article => new ArticleInfoModel(article));
       const sortedGroupedArticles = groupArticlesByListId(articleInfos);
       setArticles(sortedGroupedArticles);
     };
-    void getArticles();
+    const isAdmin = location.pathname === '/internal/admin/manage';
+    void getArticles(isAdmin);
   }, []);
 
   return (

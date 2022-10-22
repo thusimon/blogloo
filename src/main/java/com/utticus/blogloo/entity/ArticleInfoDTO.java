@@ -9,4 +9,5 @@ public interface ArticleInfoDTO {
     String getTitle();
     String getAuthor();
     Date getCreateAt();
+    boolean getVisible();
 }

@@ -30,7 +30,7 @@ const MainAppView = (): JSX.Element => {
   useEffect(() => {
     const getArticlesByListId = async (listId: string = ''): Promise<void> => {
       if (listId !== '') {
-        const articlesInfoRequest = await fetch(`/api/article/infolist/${encodeURIComponent(listId)}`);
+        const articlesInfoRequest = await fetch(`/api/user/article/infolist/${encodeURIComponent(listId)}`);
         const articlesInfoResp = await articlesInfoRequest.json() as ArticleInfoType[];
         const localeKeys = Object.keys(LOCALE);
         const articlesInfo = articlesInfoResp.map(articleInfo => new ArticleInfo(articleInfo))

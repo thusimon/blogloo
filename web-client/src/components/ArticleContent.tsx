@@ -13,17 +13,28 @@ const ArticleContent = (): JSX.Element => {
   const [article, setArticle] = useState<Article | null>(null);
 
   useEffect(() => {
-    const getArticleFullByid = async (id: string = ''): Promise<void> => {
+    const getArticleFullByid = async (isAdmin: boolean, id: string = ''): Promise<void> => {
       if (!id) {
         setArticle(null);
       } else {
-        const articleRequest = await fetch(`/api/user/article/full/${encodeURIComponent(id)}`);
+        const url = `/api/${isAdmin ? 'admin' : 'user'}/article/full/${encodeURIComponent(id)}`;
+        const option = {
+          method: 'GET'
+        };
+        isAdmin && Object.assign(option, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${state.jwt}`
+          }
+        });
+        const articleRequest = await fetch(url, option);
         const articleResp = await articleRequest.json() as ArticleType;
         const article = new Article(articleResp);
         setArticle(article);
       }
     };
-    void getArticleFullByid(state.articleId);
+    const isAdmin = location.pathname === '/internal/admin/manage';
+    void getArticleFullByid(isAdmin, state.articleId);
   }, [state.articleId]);
 
   return state.jwt && location.pathname === '/internal/admin/manage'
