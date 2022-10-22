@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 
 test('App', async () => {
-  const app = render(<MemoryRouter initialEntries={['/internal/utticus-only']}>
+  const app = render(<MemoryRouter initialEntries={['/internal/user-only']}>
     <App />
   </MemoryRouter>);
   const appDiv = document.getElementsByClassName('app');

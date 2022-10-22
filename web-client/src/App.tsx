@@ -10,8 +10,9 @@ function App (): JSX.Element {
   return (
     <AppContextProvider>
       <Routes>
-        <Route path='/internal/utticus-only' element={<MainApp />} />
         <Route path='/view/:listId' element={<MainAppView />} />
+        <Route path='/internal/user-only' element={<MainApp />} />
+        <Route path='/internal/admin-only' element={<MainApp />} />
         <Route path='/internal/admin/manage' element={<MainApp />} />
         <Route path='/internal/admin/login' element={<AdminLogin />} />
       </Routes>

@@ -33,7 +33,8 @@ const ArticleContent = (): JSX.Element => {
         setArticle(article);
       }
     };
-    const isAdmin = location.pathname === '/internal/admin/manage';
+    const isAdmin = location.pathname === '/internal/admin/manage' ||
+      location.pathname === '/internal/admin-only';
     void getArticleFullByid(isAdmin, state.articleId);
   }, [state.articleId]);
 
