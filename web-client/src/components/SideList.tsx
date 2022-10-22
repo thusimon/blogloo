@@ -55,7 +55,8 @@ const SideList = (): JSX.Element => {
       const sortedGroupedArticles = groupArticlesByListId(articleInfos);
       setArticles(sortedGroupedArticles);
     };
-    const isAdmin = location.pathname === '/internal/admin/manage';
+    const isAdmin = location.pathname === '/internal/admin/manage' ||
+      location.pathname === '/internal/admin-only';
     void getArticles(isAdmin);
   }, []);
 

@@ -21,6 +21,7 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
   const [title, setTitle] = useState(article ? article.title : '');
   const [author, setAuthor] = useState(article ? article.author : '');
   const [createAt, setCreateAt] = useState(article ? article.createAt.toISOString() : new Date().toISOString());
+  const [visible, setVisible] = useState(article ? article.visible : true);
   const [content, setContent] = useState(article ? article.content : '');
   const [notification, setNotification] = useState<NotificationType>({});
 
@@ -31,6 +32,7 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
     setTitle(article ? article.title : '');
     setAuthor(article ? article.author : '');
     setCreateAt(article ? article.createAt.toISOString() : new Date().toISOString());
+    setVisible(article ? article.visible : true);
     setContent(article ? article.content : '');
   }, [article]);
 
@@ -40,6 +42,7 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
       title,
       author,
       createAt,
+      visible,
       content
     };
     let method = 'PUT';
@@ -135,6 +138,10 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
     <div className='row manage-item'>
       <label htmlFor='createAt'>CreateAt</label>
       <input id='createAt' value={createAt} onChange={evt => setCreateAt(evt.target.value)}/>
+    </div>
+    <div className='row manage-item'>
+      <label htmlFor='visible'>Visible</label>
+      <input id='visible' type='checkbox' checked={visible} onChange={evt => setVisible(evt.target.checked)}/>
     </div>
     <div className='row manage-item'>
       <label htmlFor='content'>Content</label>

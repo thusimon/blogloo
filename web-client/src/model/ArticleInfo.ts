@@ -7,6 +7,7 @@ export interface ArticleInfoType {
   author: string
   createAt: string
   locale: string
+  visible: boolean
 }
 
 export const FAKE_ID = '<ARTICLE_ID>';
@@ -18,6 +19,7 @@ class ArticleInfo {
   author: string;
   createAt: Date;
   locale: LOCALE;
+  visible: boolean;
   constructor (data: ArticleInfoType) {
     this.id = data.id;
     this.articleListId = data.articleListId;
@@ -25,6 +27,7 @@ class ArticleInfo {
     this.author = data.author;
     this.createAt = new Date(data.createAt);
     this.locale = LOCALE[data.locale as keyof typeof LOCALE];
+    this.visible = data.visible;
   }
 }
 
