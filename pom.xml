@@ -134,29 +134,12 @@
 				<version>8.5.13</version>
 				<configuration>
 					<url>jdbc:mysql://localhost:3306/blogloo</url>
+					<!--
+					<url>jdbc:mysql://mysqldb:3306/blogloo</url>
+					-->
 					<user>sa</user>
 					<password>pd</password>
 				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/classes/static</outputDirectory>
-							<resources>
-								<resource>
-									<directory>web-client/build</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
@@ -194,6 +177,26 @@
 						<phase>prepare-package</phase>
 						<configuration>
 							<arguments>build</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/classes/static</outputDirectory>
+							<resources>
+								<resource>
+									<directory>web-client/build</directory>
+								</resource>
+							</resources>
 						</configuration>
 					</execution>
 				</executions>
