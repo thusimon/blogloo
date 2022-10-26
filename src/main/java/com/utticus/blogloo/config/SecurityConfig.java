@@ -35,6 +35,8 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers(HttpMethod.POST, "/auth/validate")
                 .permitAll()
+                .antMatchers("/actuator/**")
+                .permitAll()
                 .antMatchers("/", "/static/**", "/manifest.json", "/*.png", "/*.ico")
                 .permitAll()
                 .anyRequest()
