@@ -6,9 +6,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-@Configurable
 public class IPCacheService {
-    private static final String CACHE_BUCKET = "IP-";
+    private static final String CACHE_BUCKET = "Request:IP:Count:";
 
     @Autowired
     RedisTemplate<String, Object> redisTemplate;
@@ -19,7 +18,8 @@ public class IPCacheService {
         if (ipCount == null) {
             ipCount = 0;
         }
-        redisTemplate.opsForValue().set(key, ipCount + 1);
+        ipCount++;
+        redisTemplate.opsForValue().set(key, ipCount);
         return ipCount.intValue();
     }
 
