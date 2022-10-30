@@ -150,6 +150,7 @@
 				<version>8.5.13</version>
 				<configuration>
 					<url>jdbc:mysql://localhost:3306/blogloo</url>
+					<!-- this is for docker -->
 					<!--
 					<url>jdbc:mysql://mysqldb:3306/blogloo</url>
 					-->
