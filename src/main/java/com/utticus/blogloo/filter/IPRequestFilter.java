@@ -26,7 +26,11 @@ public class IPRequestFilter implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String trackCookieValue = Arrays.stream(request.getCookies())
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
+            cookies = new Cookie[] {};
+        }
+        String trackCookieValue = Arrays.stream(cookies)
                 .filter(c -> StringUtils.equals(c.getName(), TRACK_COOKIE_NAME))
                 .findFirst()
                 .map(c -> c.getValue())
