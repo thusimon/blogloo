@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -12,11 +14,13 @@ public class FixedRateTasks {
     @Autowired
     IPCacheService ipCacheService;
 
-    @Scheduled(fixedRate = 10000)
+    // 00:00 PST every day
+    @Scheduled(cron = "${blogloo.cron.daily}", zone = "${blogloo.cron.zone}")
     public void migrateIPToDB() {
         Map<String, Integer> ipCounts = ipCacheService.getAllIPVisit();
-        long now = System.currentTimeMillis() / 1000;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+        Date d = new Date();
         System.out.println(
-                "schedule tasks using jobs - " + now + ", IP size = " + ipCounts.size());
+                "schedule tasks using jobs - " + formatter.format(d)   + ", IP size = " + ipCounts.size());
     }
 }
