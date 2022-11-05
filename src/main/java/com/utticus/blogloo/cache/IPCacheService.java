@@ -25,14 +25,6 @@ public class IPCacheService {
         return ipCount.intValue();
     }
 
-    public void clearIP(String ip) {
-        redisTemplate.opsForHash().delete(CACHE_BUCKET, ip);
-    }
-
-    public void clearIP() {
-        redisTemplate.opsForHash().putAll(CACHE_BUCKET, new HashMap<>());
-    }
-
     public int getIP(String ip) {
         Integer ipCount = (Integer)redisTemplate.opsForHash().get(CACHE_BUCKET, ip);
         if (ipCount == null) {
@@ -45,5 +37,16 @@ public class IPCacheService {
         Map<Object, Object> raw = redisTemplate.opsForHash().entries(CACHE_BUCKET);
         Map<String, Integer> result = (Map)raw;
         return result;
+    }
+
+    public void clearIP(String ip) {
+        redisTemplate.opsForHash().delete(CACHE_BUCKET, ip);
+    }
+
+    public void clearIP() {
+        Map<String, Integer> ipCounts = getAllIPVisit();
+        for (Map.Entry<String, Integer> entry: ipCounts.entrySet()) {
+            redisTemplate.opsForHash().delete(CACHE_BUCKET, entry.getKey());
+        }
     }
 }
