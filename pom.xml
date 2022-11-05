@@ -151,9 +151,7 @@
 				<configuration>
 					<url>jdbc:mysql://localhost:3306/blogloo</url>
 					<!-- this is for docker -->
-					<!--
-					<url>jdbc:mysql://mysqldb:3306/blogloo</url>
-					-->
+<!--					<url>jdbc:mysql://mysqldb:3306/blogloo</url>-->
 					<user>sa</user>
 					<password>pd</password>
 				</configuration>

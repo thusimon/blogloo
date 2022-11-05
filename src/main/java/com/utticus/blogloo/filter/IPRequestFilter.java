@@ -20,7 +20,7 @@ import java.util.TimeZone;
 public class IPRequestFilter implements HandlerInterceptor {
     private static final String TRACK_COOKIE_NAME = "X-VISIT";
     private static final String DATE_ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
-    private static final int TRACK_COOKIE_EXPIRE = 60 * 1;
+    private static final int TRACK_COOKIE_EXPIRE = 60 * 30; // 30min
     @Autowired
     IPCacheService IPCacheService;
 
