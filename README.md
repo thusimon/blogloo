@@ -4,7 +4,7 @@
 - docker-compose -f docker-compose.yml up
 - docker-compose up -d
 - docker-compose stop
-- docker exec -it <container-ID> sh
+- docker exec -it \<container-ID\> sh
 - mysql -usa -p
 - sudo service docker start
 - sudo service redis-server restart
