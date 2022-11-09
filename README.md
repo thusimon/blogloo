@@ -1,9 +1,9 @@
 ## useful commands
 - docker build -t blogloo-server .
 - docker-compose build
-- docker-compose -f docker-compose.yml up
 - docker-compose up -d
 - docker-compose stop
+- docker-compose -f docker-compose.yml up
 - docker exec -it \<container-ID\> sh
 - mysql -usa -p
 - sudo service docker start
