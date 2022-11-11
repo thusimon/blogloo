@@ -47,8 +47,6 @@ public class IPRequestFilter implements HandlerInterceptor {
         response.addCookie(trackCookie);
         String ipAddress = HttpUtil.getRequestIP(request);
         IPCacheService.addIP(ipAddress);
-        int count = IPCacheService.getIP(ipAddress);
-        System.out.println(ipAddress + ": " + count);
         return true;
     }
 }

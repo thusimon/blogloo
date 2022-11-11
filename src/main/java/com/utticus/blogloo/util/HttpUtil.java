@@ -15,7 +15,8 @@ public class HttpUtil {
             "HTTP_FORWARDED_FOR",
             "HTTP_FORWARDED",
             "HTTP_VIA",
-            "REMOTE_ADDR"
+            "REMOTE_ADDR",
+            "X-Real-IP"
             // add more matching headers here ...
     };
 
