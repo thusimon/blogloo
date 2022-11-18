@@ -1,13 +1,5 @@
 version: "3.8"
 services:
-  nginx:
-    build:
-      context: .
-      dockerfile: Dockerfile.nginx
-    restart: always
-    ports:
-      - 80:80
-
   mysqldb:
     image: "mysql:8.0.30"
     restart: always
@@ -35,6 +27,5 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - nginx
       - mysqldb
       - redis
