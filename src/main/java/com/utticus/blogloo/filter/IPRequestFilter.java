@@ -3,6 +3,8 @@ package com.utticus.blogloo.filter;
 import com.utticus.blogloo.cache.IPCacheService;
 import com.utticus.blogloo.util.HttpUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -18,6 +20,8 @@ import java.util.TimeZone;
 
 @Component
 public class IPRequestFilter implements HandlerInterceptor {
+    private static final Logger logger = LogManager.getLogger(IPRequestFilter.class);
+
     private static final String TRACK_COOKIE_NAME = "X-VISIT";
     private static final String DATE_ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
     private static final int TRACK_COOKIE_EXPIRE = 60 * 30; // 30min
@@ -46,6 +50,7 @@ public class IPRequestFilter implements HandlerInterceptor {
         trackCookie.setMaxAge(TRACK_COOKIE_EXPIRE);
         response.addCookie(trackCookie);
         String ipAddress = HttpUtil.getRequestIP(request);
+        logger.info("visitor from ip {}, adding to cache", ipAddress);
         IPCacheService.addIP(ipAddress);
         return true;
     }
