@@ -1,6 +1,8 @@
 # local
 - docker image ls
 - docker image prune -a
+- docker system prune -a
+- docker stop \<container-ID\>
 - docker build -t blogloo-server .
 - docker-compose build
 - docker-compose up -d
