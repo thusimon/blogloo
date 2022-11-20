@@ -70,7 +70,7 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
       body: JSON.stringify(payload)
     });
     if (updateResp.status !== 200) {
-      navigate('/internal/admin/login');
+      navigate('/view-admin/login');
       return;
     }
     setNotification({
@@ -96,7 +96,7 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
       }
     });
     if (deleteResp.status !== 200) {
-      navigate('/internal/admin/login');
+      navigate('/view-admin/login');
       return;
     }
     setNotification({

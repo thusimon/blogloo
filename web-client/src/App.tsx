@@ -11,10 +11,11 @@ function App (): JSX.Element {
     <AppContextProvider>
       <Routes>
         <Route path='/' element={<MainApp />} />
-        <Route path='/internal/admin-only' element={<MainApp />} />
-        <Route path='/internal/admin/manage' element={<MainApp />} />
+        <Route path='/index.html' element={<MainApp />} />
+        <Route path='/view-admin' element={<MainApp />} />
+        <Route path='/view-admin/manage' element={<MainApp />} />
         <Route path='/view/:listId' element={<MainAppView />} />
-        <Route path='/internal/admin/login' element={<AdminLogin />} />
+        <Route path='/view-admin/login' element={<AdminLogin />} />
       </Routes>
     </AppContextProvider>
   );

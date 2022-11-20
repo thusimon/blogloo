@@ -34,10 +34,17 @@
 - sudo yum -y install nginx
 - nginx -v
 - sudo systemctl start nginx.service
+- sudo systemctl stop nginx.service
 ### config
 - sudo nginx -t
 - sudo nginx -s quit
 - sudo nginx -s reload
 - ps -ax | grep nginx
-## SSL config
-- 
+## SSL
+### install
+- curl -O https://dl.eff.org/certbot-auto
+- sudo chmod +x certbot-auto
+- sudo mv certbot-auto /usr/local/bin/certbot-auto
+### config
+- sudo su -
+- certbot-auto certonly --standalone -d utticus.com -d www.utticus.com -d blogloo.utticus.com

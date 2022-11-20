@@ -30,7 +30,7 @@ const AdminLogin = (): JSX.Element => {
     const jwtData = await tokenResp.json();
     localStorage.setItem('jwt', jwtData.jwt);
     dispatch({ type: Actions.UpdateJWT, data: jwtData });
-    navigate('/internal/admin/manage');
+    navigate('/view-admin/manage');
   };
 
   return <div>
