@@ -33,12 +33,12 @@ const ArticleContent = (): JSX.Element => {
         setArticle(article);
       }
     };
-    const isAdmin = location.pathname === '/internal/admin/manage' ||
-      location.pathname === '/internal/admin-only';
+    const isAdmin = location.pathname === '/view-admin/manage' ||
+      location.pathname === '/view-admin';
     void getArticleFullByid(isAdmin, state.articleId);
   }, [state.articleId]);
 
-  return state.jwt && location.pathname === '/internal/admin/manage'
+  return state.jwt && location.pathname === '/view-admin/manage'
     ? <ArticleContentManager article={article} />
     : (article
         ? <ArticleContentReader article={article} />
