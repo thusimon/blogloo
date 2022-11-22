@@ -16,7 +16,11 @@
 # aws
 - ssh -i lu-dev-key.pem ec2-user@\<ec2-public-ip\>
 - scp -r -i lu-dev-key.pem ./target/blogloo-0.0.1-SNAPSHOT.jar ec2-user@\<ec2-public-ip\>:~/apps/blogloo/target
+- scp -r -i lu-dev-key.pem ./data_ec2/www ec2-user@\<ec2-public-ip\>:/data
 - sudo yum update
+### rpm lock
+- ps -axwww | grep rpm
+- sudo rpm --rebuilddb
 ## docker
 ### install
 - sudo amazon-linux-extras install docker
@@ -33,18 +37,19 @@
 - sudo yum clean metadata
 - sudo yum -y install nginx
 - nginx -v
-- sudo systemctl start nginx.service
-- sudo systemctl stop nginx.service
-### config
+### config and start
 - sudo nginx -t
 - sudo nginx -s quit
 - sudo nginx -s reload
 - ps -ax | grep nginx
+- sudo fuser -k 80/tcp
+- sudo fuser -k 443/tcp
+- sudo service nginx restart
+- service nginx status
+- sudo less /var/log/nginx/error.log
 ## SSL
 ### install
-- curl -O https://dl.eff.org/certbot-auto
-- sudo chmod +x certbot-auto
-- sudo mv certbot-auto /usr/local/bin/certbot-auto
+Please follow this [link](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/SSL-on-amazon-linux-2.html#letsencrypt)
 ### config
 - sudo su -
 - certbot-auto certonly --standalone -d utticus.com -d www.utticus.com -d blogloo.utticus.com
