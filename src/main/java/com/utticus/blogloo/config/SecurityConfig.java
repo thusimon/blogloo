@@ -29,19 +29,22 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/api/admin/**")
                 .hasAnyAuthority("ADMIN")
-                .antMatchers(HttpMethod.GET, "/index.html")
+                .antMatchers(HttpMethod.GET,
+                        "/",
+                        "/index.html",
+                        "/view/**",
+                        "/view-admin/login",
+                        "/api/user/**")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/view/**")
+                .antMatchers(HttpMethod.POST,
+                        "/auth/token",
+                        "/auth/validate")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/user/**")
-                .permitAll()
-                .antMatchers(HttpMethod.POST, "/auth/token")
-                .permitAll()
-                .antMatchers(HttpMethod.POST, "/auth/validate")
-                .permitAll()
-                .antMatchers("/actuator/**")
-                .permitAll()
-                .antMatchers("/", "/static/**", "/manifest.json", "/*.png", "/*.ico")
+                .antMatchers("/actuator/**",
+                        "/static/**",
+                        "/manifest.json",
+                        "/*.png",
+                        "/*.ico")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
