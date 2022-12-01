@@ -17,6 +17,12 @@
       p:first-of-type {
         margin-top: 0px;
       }
+      .video-container {
+        text-align: center;
+        video {
+          width: 72%
+        }
+      }
     }
     .article-footer {
       font-style: italic;

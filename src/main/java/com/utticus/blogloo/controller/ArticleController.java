@@ -27,17 +27,29 @@ public class ArticleController {
 
     @GetMapping(value = "/full/{id}")
     @ResponseBody
+    public Optional<Article> getVisibleById(@PathVariable String id) {
+        return articleRepo.findVisibleFullById(id);
+    }
+
+    @GetMapping(value = "/full-a/{id}")
+    @ResponseBody
     public Optional<Article> getById(@PathVariable String id) {
-        return articleRepo.findFullById(id);
+        return articleRepo.findById(id);
     }
 
     @GetMapping(value = "/info/{id}")
     @ResponseBody
     public Optional<ArticleInfoDTO> getInfoById(@PathVariable String id) {
-        return articleRepo.findInfoById(id);
+        return articleRepo.findVisibleInfoById(id);
     }
 
     @GetMapping(value = "/infolist/{listId}")
+    @ResponseBody
+    public List<ArticleInfoDTO> getVisibleInfoByListId(@PathVariable String listId) {
+        return articleRepo.findVisibleInfoByListId(listId);
+    }
+
+    @GetMapping(value = "/infolist-a/{listId}")
     @ResponseBody
     public List<ArticleInfoDTO> getInfoByListId(@PathVariable String listId) {
         return articleRepo.findInfoByListId(listId);

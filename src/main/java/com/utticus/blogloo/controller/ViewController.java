@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class ViewController {
-    @RequestMapping(value = "/view/**", method= RequestMethod.GET)
-    public String view(Model model) {
-        return "view";
+    @RequestMapping(value = {"/", "/index.html", "/view/**", "/view-admin/**"}, method= RequestMethod.GET)
+    public String home(Model model) {
+        return "home";
     }
 }

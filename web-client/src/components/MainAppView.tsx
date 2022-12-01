@@ -21,7 +21,7 @@ const MainAppView = (): JSX.Element => {
   };
 
   const getArticle = async (id: string): Promise<void> => {
-    const articleRequest = await fetch(`/api/user/article/full/${encodeURIComponent(id)}`);
+    const articleRequest = await fetch(`/api/user/article/full-a/${encodeURIComponent(id)}`);
     const articleResp = await articleRequest.json() as ArticleType;
     const article = new Article(articleResp);
     setArticle(article);
@@ -30,7 +30,7 @@ const MainAppView = (): JSX.Element => {
   useEffect(() => {
     const getArticlesByListId = async (listId: string = ''): Promise<void> => {
       if (listId !== '') {
-        const articlesInfoRequest = await fetch(`/api/user/article/infolist/${encodeURIComponent(listId)}`);
+        const articlesInfoRequest = await fetch(`/api/user/article/infolist-a/${encodeURIComponent(listId)}`);
         const articlesInfoResp = await articlesInfoRequest.json() as ArticleInfoType[];
         const localeKeys = Object.keys(LOCALE);
         const articlesInfo = articlesInfoResp.map(articleInfo => new ArticleInfo(articleInfo))

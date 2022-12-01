@@ -13,6 +13,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(ipRequestFilter).addPathPatterns("/api/user/article/all");
+        registry.addInterceptor(ipRequestFilter).addPathPatterns("/api/user/article/all", "/api/user/article/infolist-a/*");
     }
 }
