@@ -135,6 +135,12 @@
 			<artifactId>flyway-mysql</artifactId>
 			<version>8.5.13</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.10</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -210,6 +216,28 @@
 							<resources>
 								<resource>
 									<directory>web-client/build</directory>
+									<excludes>
+										<exclude>assets-manifest.json</exclude>
+										<exclude>asset-manifest.json</exclude>
+									</excludes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-webpack-assets</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/classes</outputDirectory>
+							<resources>
+								<resource>
+									<directory>web-client/build</directory>
+									<includes>
+										<include>assets-manifest.json</include>
+									</includes>
 								</resource>
 							</resources>
 						</configuration>

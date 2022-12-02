@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fl" uri="/WEB-INF/tlds/files.tld" %>
 <!doctype html>
 <html lang="en">
   <head>
@@ -10,8 +11,8 @@
     <link rel="apple-touch-icon" href="/logo192.png"/>
     <link rel="manifest" href="/manifest.json"/>
     <title>Blogloo</title>
-    <script defer="defer" src="/static/js/main.8e100944.js"></script>
-    <link href="/static/css/main.e7464de3.css" rel="stylesheet">
+    <script type="text/javascript" defer="defer" src="${fl:getManifestResource('main.js')}"></script>
+    <link rel="stylesheet" href="${fl:getManifestResource('main.css')}">
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
