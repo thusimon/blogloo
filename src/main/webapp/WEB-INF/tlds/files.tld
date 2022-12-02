@@ -1,0 +1,11 @@
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>2.0</jsp-version>
+    <short-name>Files TLD</short-name>
+
+    <function>
+        <name>getManifestResource</name>
+        <function-class>com.utticus.blogloo.tld.FilesTag</function-class>
+        <function-signature>java.lang.String getManifestResource(java.lang.String)</function-signature>
+    </function>
+</taglib>
