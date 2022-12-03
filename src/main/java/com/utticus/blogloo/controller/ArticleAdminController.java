@@ -5,6 +5,8 @@ import com.utticus.blogloo.entity.ArticleInfoDTO;
 import com.utticus.blogloo.entity.IDGenerator;
 import com.utticus.blogloo.jpa.ArticleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,6 +53,7 @@ public class ArticleAdminController {
         return articleRepo.save(article);
     }
 
+    @CachePut(value = "article", key = "#article.id")
     @PutMapping(value = "/full")
     @ResponseBody
     public Article updateArticle(@RequestBody Article article) {
@@ -65,6 +68,7 @@ public class ArticleAdminController {
         return articleRepo.save(article);
     }
 
+    @CacheEvict(value = "article", key = "#id")
     @DeleteMapping(value = "/full/{id}")
     @ResponseBody
     public boolean deleteArticle(@PathVariable String id) {
