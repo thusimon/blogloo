@@ -6,6 +6,7 @@ import com.utticus.blogloo.jpa.IPCountRepo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class FixedRateTasks {
     IPCountRepo ipCountRepo;
 
     // 00:00 PST every day
-    @Scheduled(cron = "${blogloo.cron.daily}", zone = "${blogloo.cron.zone}")
+    @Scheduled(cron = "0 0 0 * * *", zone = "${blogloo.cron.zone}")
     public void migrateIPToDB() {
         Map<String, Integer> ipCounts = ipCacheService.getAllIPVisit();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
@@ -46,5 +47,11 @@ public class FixedRateTasks {
         }
         // clear the cache
         ipCacheService.clearIP();
+    }
+
+    @CacheEvict(value = "article", allEntries = true)
+    @Scheduled(cron = "0 */30 * * * *", zone = "${blogloo.cron.zone}")
+    public void clearArticleCache() {
+        logger.info("all articles cache is cleared");
     }
 }
