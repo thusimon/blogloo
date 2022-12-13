@@ -56,7 +56,7 @@ const MainAppView = (): JSX.Element => {
 
   return <div className="app">
     <div className='app-header-container'>
-      <Head locale={true} />
+      <Head showLocale={true} />
     </div>
     <div className={'app-main-view-container'}>
       { article

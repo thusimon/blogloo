@@ -3,6 +3,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
+import './i18n';
 import './index.scss';
 
 const root = ReactDOM.createRoot(

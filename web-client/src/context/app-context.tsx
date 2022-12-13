@@ -1,5 +1,6 @@
 import { createContext, useContext, useReducer, ReactNode, ReactElement } from 'react';
 import ArticleInfo from '../model/ArticleInfo';
+import { useQuery } from '../utils';
 import { LOCALE } from '../types';
 
 export interface ContextDataType {
@@ -67,8 +68,17 @@ interface ProviderPropType {
   children: ReactNode
 };
 
+const buildContextData = (contextData: ContextDataType): ContextDataType => {
+  const query = useQuery();
+  const locale = query.get('locale');
+  if (locale != null) {
+    contextData.locale = locale as LOCALE;
+  }
+  return contextData;
+};
+
 export const AppContextProvider = ({ children }: ProviderPropType): ReactElement => {
-  const [state, dispatch] = useReducer(AppReducer, initContextData);
+  const [state, dispatch] = useReducer(AppReducer, buildContextData(initContextData));
   // NOTE: you *might* need to memoize this value
   const value = { state, dispatch };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
