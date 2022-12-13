@@ -1,14 +1,21 @@
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppContext, Actions } from '../context/app-context';
 import { LOCALE } from '../types';
 import { localeMapping } from './ArticleInfo';
 
 import './Head.scss';
 export interface HeaderPropType {
-  locale: boolean
+  showLocale: boolean
 };
 
-const Head = ({ locale }: HeaderPropType): JSX.Element => {
+const Head = ({ showLocale }: HeaderPropType): JSX.Element => {
   const { state, dispatch } = useAppContext();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    void i18n.changeLanguage(state.locale);
+  }, [state.locale]);
 
   const updateLocale = (locale: LOCALE): void => {
     dispatch({ type: Actions.UpdateLocale, data: { locale } });
@@ -27,8 +34,9 @@ const Head = ({ locale }: HeaderPropType): JSX.Element => {
 
   return <header className='app-header'>
     <span className='logo-text'>Blogloo</span>
+    <span>{t('preference')}</span>
     {
-      locale && <div className='locale-select'>
+      showLocale && <div className='locale-select'>
         {
           getLocalesFromArticles()
         }
