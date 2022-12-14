@@ -9,19 +9,22 @@ void i18n
       en: {
         translations: {
           preference: 'Preference',
-          font: 'Font'
+          font: 'Font',
+          close: 'Close'
         }
       },
       zh_TW: {
         translations: {
           preference: '設置',
-          font: '字體'
+          font: '字體',
+          close: '關閉'
         }
       },
       zh_CN: {
         translations: {
           preference: '设置',
-          font: '字体'
+          font: '字体',
+          close: '关闭'
         }
       }
     },

@@ -10,13 +10,16 @@ export interface ContextDataType {
   listArticles: ArticleInfo[]
   jwt: string
   sideExpand: boolean
+  prefModal: boolean
+  fontSize: string
 }
 
 export enum Actions {
   UpdateLocale,
   UpdateArticleAndListId,
   UpdateJWT,
-  ToggleSideList
+  ToggleSideList,
+  TogglePrefModal
 };
 
 export interface ActionType {
@@ -35,7 +38,9 @@ const initContextData: ContextDataType = {
   listId: '',
   listArticles: [],
   jwt: localStorage.getItem('jwt') ?? '',
-  sideExpand: true
+  sideExpand: true,
+  prefModal: false,
+  fontSize: 'base'
 };
 
 const AppReducer = (state: ContextDataType, action: ActionType): ContextDataType => {
@@ -56,6 +61,9 @@ const AppReducer = (state: ContextDataType, action: ActionType): ContextDataType
     }
     case Actions.ToggleSideList: {
       return { ...state, ...{ sideExpand: !state.sideExpand } };
+    }
+    case Actions.TogglePrefModal: {
+      return { ...state, ...{ prefModal: !state.prefModal } };
     }
     default:
       return state;
