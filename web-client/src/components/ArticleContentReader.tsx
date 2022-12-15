@@ -1,15 +1,23 @@
+import { useAppContext } from '../context/app-context';
 import Article from '../model/Article';
+import { getTitleFontSizeClass, getBodyFontSizeClass } from '../utils';
 
 import './ArticleContentReader.scss';
 
 const VIDEO_IDENTIFIER = '#UTTICUS_VIDEO#';
 
 const ArticleContentReader = ({ article }: { article: Article }): JSX.Element => {
+  const { state } = useAppContext();
+
+  const fontSize = state.fontSize;
+  const titleFontSizeClass = getTitleFontSizeClass(fontSize);
+  const bodyFontSizeClass = getBodyFontSizeClass(fontSize);
+
   return <div className='article-container right-content-container'>
-    <div className='article-title'>
+    <div className={`article-title ${titleFontSizeClass}`}>
       {article.title}
     </div>
-    <div className='article-main'>
+    <div className={`article-main ${bodyFontSizeClass}`}>
       <div className='article-content'>{
         article.content.split('\n').map((p, idx) => {
           if (p.startsWith(VIDEO_IDENTIFIER)) {

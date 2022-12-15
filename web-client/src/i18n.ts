@@ -10,21 +10,33 @@ void i18n
         translations: {
           preference: 'Preference',
           font: 'Font',
-          close: 'Close'
+          close: 'Close',
+          small: 'Small',
+          normal: 'Normal',
+          large: 'Large',
+          xlarge: 'Extra Large'
         }
       },
       zh_TW: {
         translations: {
           preference: '設置',
           font: '字體',
-          close: '關閉'
+          close: '關閉',
+          small: '小',
+          normal: '正常',
+          large: '大',
+          xlarge: '特大'
         }
       },
       zh_CN: {
         translations: {
           preference: '设置',
           font: '字体',
-          close: '关闭'
+          close: '关闭',
+          small: '小',
+          normal: '正常',
+          large: '大',
+          xlarge: '特大'
         }
       }
     },
