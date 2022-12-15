@@ -12,3 +12,33 @@ export const useQuery = (): URLSearchParams => {
   const { search } = useLocation();
   return useMemo(() => new URLSearchParams(search), [search]);
 };
+
+export const getTitleFontSizeClass = (size: string): string => {
+  switch (size) {
+    case 'small':
+      return 'text-base';
+    case 'normal':
+      return 'text-2xl';
+    case 'large':
+      return 'text-4xl';
+    case 'xlarge':
+      return 'text-6xl';
+    default:
+      return 'text-2xl';
+  }
+};
+
+export const getBodyFontSizeClass = (size: string): string => {
+  switch (size) {
+    case 'small':
+      return 'text-xs';
+    case 'normal':
+      return 'text-base';
+    case 'large':
+      return 'text-2xl';
+    case 'xlarge':
+      return 'text-4xl';
+    default:
+      return 'text-base';
+  }
+};

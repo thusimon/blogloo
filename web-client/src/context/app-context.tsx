@@ -19,7 +19,8 @@ export enum Actions {
   UpdateArticleAndListId,
   UpdateJWT,
   ToggleSideList,
-  TogglePrefModal
+  TogglePrefModal,
+  UpdateFontSize
 };
 
 export interface ActionType {
@@ -40,7 +41,7 @@ const initContextData: ContextDataType = {
   jwt: localStorage.getItem('jwt') ?? '',
   sideExpand: true,
   prefModal: false,
-  fontSize: 'base'
+  fontSize: 'normal'
 };
 
 const AppReducer = (state: ContextDataType, action: ActionType): ContextDataType => {
@@ -64,6 +65,9 @@ const AppReducer = (state: ContextDataType, action: ActionType): ContextDataType
     }
     case Actions.TogglePrefModal: {
       return { ...state, ...{ prefModal: !state.prefModal } };
+    }
+    case Actions.UpdateFontSize: {
+      return { ...state, ...data };
     }
     default:
       return state;
