@@ -30,7 +30,9 @@ const Head = ({ showLocale }: HeaderPropType): JSX.Element => {
     const locales = Object.keys(LOCALE) as LOCALE[];
     const filteredLocales = locales.filter(locale => state.listArticles.find(article => locale === article.locale));
     return filteredLocales.map(locale => {
-      const { img, name } = localeMapping[locale];
+      const t = i18n.getFixedT(locale);
+      const name = t('name');
+      const { img } = localeMapping[locale];
       return <img src={img} title={name} alt={name} key={locale} data-se={locale}
         className={`h-3/5 mx-[4px] cursor-pointer transition-transform duration-500 hover:scale-125 ${locale === state.locale ? 'selected' : ''}`}
         onClick={evt => { evt.stopPropagation(); updateLocale(locale); }}></img>;

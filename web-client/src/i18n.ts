@@ -8,6 +8,7 @@ void i18n
     resources: {
       en: {
         translations: {
+          name: 'English',
           preference: 'Preference',
           font: 'Font',
           close: 'Close',
@@ -19,6 +20,7 @@ void i18n
       },
       zh_TW: {
         translations: {
+          name: '中文正體',
           preference: '設置',
           font: '字體',
           close: '關閉',
@@ -30,6 +32,7 @@ void i18n
       },
       zh_CN: {
         translations: {
+          name: '中文简体',
           preference: '设置',
           font: '字体',
           close: '关闭',
