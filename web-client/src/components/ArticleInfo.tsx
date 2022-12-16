@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getI18n } from 'react-i18next';
 import { LOCALE } from '../types';
 import ArticleInfoModel from '../model/ArticleInfo';
 import { useAppContext, Actions } from '../context/app-context';
@@ -16,16 +17,13 @@ export interface ArtileInfoPropsType {
 
 export const localeMapping = {
   [LOCALE.en]: {
-    img: usFlag,
-    name: 'English'
+    img: usFlag
   },
   [LOCALE.zh_TW]: {
-    img: twFlag,
-    name: '中文正體'
+    img: twFlag
   },
   [LOCALE.zh_CN]: {
-    img: cnFlag,
-    name: '中文简体'
+    img: cnFlag
   }
 };
 
@@ -33,20 +31,24 @@ const getArticleByLocale = (locale: LOCALE, articles: ArticleInfoModel[]): Artic
 
 const ArticleInfo = ({ articles, listId }: ArtileInfoPropsType): JSX.Element => {
   const { state, dispatch } = useAppContext();
-  const [articleLocale, setArticleLocale] = useState(() => {
-    const firstExistlocale = (Object.keys(LOCALE) as LOCALE[]).find(locale => {
-      return articles.find(article => article.locale === locale);
-    });
-    return firstExistlocale ? LOCALE[firstExistlocale] : LOCALE.en;
-  });
+  const i18n = getI18n();
+
   const [localeToggle, setLocaleToggle] = useState(false);
 
-  const article = getArticleByLocale(articleLocale, articles);
+  const article = getArticleByLocale(state.locale, articles);
+  const articleLocale = article ? state.locale : articles[0].locale;
 
   const updateLocale = (locale: LOCALE): void => {
     const article = getArticleByLocale(locale, articles);
-    setArticleLocale(locale);
-    updateArticleAndListId(article ? article.id : '', listId, articles);
+    dispatch({
+      type: Actions.UpdateArticleAndListId,
+      data: {
+        articleId: article ? article.id : '',
+        listId,
+        listArticles: articles
+      }
+    });
+    dispatch({ type: Actions.UpdateLocale, data: { locale } });
   };
 
   const getLocalSelections = (articles: ArticleInfoModel[]): JSX.Element => {
@@ -54,7 +56,9 @@ const ArticleInfo = ({ articles, listId }: ArtileInfoPropsType): JSX.Element => 
     const filteredLocales = locales.filter(locale => articles.find(article => locale === article.locale));
     return <span className={`grid-locale grid-cell ${localeToggle ? 'grid-show' : 'grid-hide'}`}>
       {filteredLocales.map(locale => {
-        const { img, name } = localeMapping[locale];
+        const t = i18n.getFixedT(locale);
+        const name = t('name');
+        const { img } = localeMapping[locale];
         return <img src={img} title={name} alt={name} key={locale} data-se={locale}
           className={locale === articleLocale ? 'icon selected' : 'icon'}
           onClick={evt => { evt.stopPropagation(); updateLocale(locale); }}></img>;
@@ -62,10 +66,7 @@ const ArticleInfo = ({ articles, listId }: ArtileInfoPropsType): JSX.Element => 
     </span>;
   };
 
-  const updateArticleAndListId = (articleId: string, listId: string, listArticles: ArticleInfoModel[]): void => {
-    dispatch({ type: Actions.UpdateArticleAndListId, data: { articleId, listId, listArticles } });
-  };
-
+  const name = i18n.getFixedT(articleLocale)('name');
   return <div className={`article-info-container ${listId === state.listId ? 'article-info-container-selected' : ''}`}>
     <div className='article-info-basic' onClick={() => updateLocale(articleLocale)}>
       <span className='grid-title grid-cell'>{article?.title ?? '404'}</span>
@@ -75,8 +76,8 @@ const ArticleInfo = ({ articles, listId }: ArtileInfoPropsType): JSX.Element => 
     </div>
     <div className='article-info-locale-select'>
       <img src={localeMapping[articleLocale].img}
-        title={localeMapping[articleLocale].name}
-        alt={localeMapping[articleLocale].name}
+        title={name}
+        alt={name}
         data-se={articleLocale}
         onClick={() => setLocaleToggle(!localeToggle)}></img>
     </div>

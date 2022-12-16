@@ -25,7 +25,7 @@ const Preference = (): JSX.Element => {
   };
 
   const displayClass = state.prefModal ? 'block' : 'hidden';
-  return <div className={`${displayClass} absolute inset-y-0 inset-x-0 text-black backdrop-blur-[2px]`}>
+  return <div className={`${displayClass} absolute inset-y-0 inset-x-0 text-black backdrop-blur-[2px] z-10`}>
     <div className='absolute top-1/4 inset-x-1/4 overflow-hidden border-2 rounded-md border-neutral-800 border-solid drop-shadow-md bg-neutral-800'>
       <div className='flex items-center justify-between px-[4px] text-slate-100'>
         <div>{t('preference')}</div>
