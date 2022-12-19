@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Actions, useAppContext } from '../context/app-context';
 import { LOCALE } from '../types';
@@ -24,6 +24,7 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
   const [visible, setVisible] = useState(article ? article.visible : true);
   const [content, setContent] = useState(article ? article.content : '');
   const [notification, setNotification] = useState<NotificationType>({});
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setId(article ? article.id : FAKE_ID);
@@ -105,6 +106,47 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
     });
   };
 
+  const uploadFile = async (): Promise<void> => {
+    if (fileInputRef.current === null || fileInputRef.current.files === null || fileInputRef.current.files[0] === null) {
+      setNotification({
+        type: 'warn',
+        message: 'can not get file, please select one'
+      });
+      return;
+    }
+    const uploadFile = fileInputRef.current.files[0];
+    const formData = new FormData();
+    formData.append('file', uploadFile);
+    try {
+      const uploadResp = await fetch('/api/files/upload', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${state.jwt}`
+        },
+        body: formData
+      });
+      const uploadRespJson = await uploadResp.json();
+      console.log(121, uploadResp, uploadRespJson);
+      if (uploadResp.ok) {
+        setNotification({
+          type: 'success',
+          message: `Successfully uploaded file ${uploadFile.name}`
+        });
+      } else {
+        setNotification({
+          type: 'warn',
+          message: `Failed to upload file ${uploadFile.name}`
+        });
+      }
+    } catch (err) {
+      console.log(131, err);
+      setNotification({
+        type: 'warn',
+        message: 'Failed'
+      });
+    }
+  };
+
   const handleLocaleChange = (value: string): void => {
     setLocale(value as LOCALE);
     dispatch({ type: Actions.UpdateLocale, data: { locale: value } });
@@ -151,6 +193,10 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
       <button onClick={() => { void updateArticle(false); }}>{!id || id === FAKE_ID ? 'Create' : 'Update'}</button>
       <button onClick={() => { void updateArticle(true); }}>Create New List</button>
       <button onClick={() => { void deleteArticle(); }}>Delete</button>
+    </div>
+    <div>
+      <input type='file' name='file' ref={fileInputRef} />
+      <button onClick={() => { void uploadFile(); }}>Upload</button>
     </div>
     <div className='row notifications-container'>
       <p className={notification.type}>{notification.message}</p>
