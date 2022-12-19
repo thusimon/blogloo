@@ -34,7 +34,8 @@ public class SecurityConfig {
                         "/index.html",
                         "/view/**",
                         "/view-admin/login",
-                        "/api/user/**")
+                        "/api/user/**",
+                        "/file_uploads/public/**")
                 .permitAll()
                 .antMatchers(HttpMethod.POST,
                         "/auth/token",
