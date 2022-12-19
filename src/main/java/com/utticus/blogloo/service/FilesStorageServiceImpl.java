@@ -2,7 +2,7 @@ package com.utticus.blogloo.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,6 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.FileAlreadyExistsException;
@@ -22,10 +21,14 @@ import java.util.stream.Stream;
 @Service
 public class FilesStorageServiceImpl implements FilesStorageService{
     private static final Logger logger = LogManager.getLogger(FilesStorageServiceImpl.class);
-    private final Path root = Paths.get("file_uploads");
+
+    @Value("${blogloo.files.public.path}")
+    private String filesPublicPath;
+    private Path root;
     @Override
     @PostConstruct
     public void init() {
+        root = Paths.get(filesPublicPath);
         logger.info("init file storage service, path is {}", root.toAbsolutePath());
         try {
             Files.createDirectories(root);
