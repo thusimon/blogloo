@@ -15,7 +15,7 @@
 
 # aws
 - ssh -i lu-dev-key.pem ec2-user@\<ec2-public-ip\>
-- scp -r -i lu-dev-key.pem ./target/blogloo-0.0.1-SNAPSHOT.jar ec2-user@\<ec2-public-ip\>:~/apps/blogloo/target
+- scp -r -i lu-dev-key.pem ./target/blogloo-0.0.1-SNAPSHOT.war ec2-user@\<ec2-public-ip\>:~/apps/blogloo/target
 - scp -r -i lu-dev-key.pem ./data_ec2/www ec2-user@\<ec2-public-ip\>:/data
 - sudo yum update
 ### rpm lock

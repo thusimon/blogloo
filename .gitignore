@@ -33,5 +33,6 @@ build/
 ### VS Code ###
 .vscode/
 *.pem
+*.ppk
 
 file_uploads

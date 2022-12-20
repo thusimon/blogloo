@@ -33,18 +33,24 @@ const AdminLogin = (): JSX.Element => {
     navigate('/view-admin/manage');
   };
 
-  return <div>
-    <p>Admin Login here!</p>
-    <form onSubmit={evt => { void handleLogin(evt); }}>
-      <label htmlFor='username'>Username</label>
-      <input type="text" id='username' name='username' placeholder='Username' value={username}
-        onChange={evt => setUsername(evt.target.value)}></input>
-      <br />
-      <label htmlFor='password'>Password</label>
-      <input type="password" id='password' name='password' placeholder='Password' value={password}
-        onChange={evt => setPassword(evt.target.value)}></input>
-      <br />
-      <input type="submit" value="Login" />
+  return <div className='m-3'>
+    <h1 className='text-2xl text-blue-600 font-semibold'>Admin Login here!</h1>
+    <form className='border-2 border-slate-400 my-2' onSubmit={evt => { void handleLogin(evt); }}>
+      <div className='p-2 flex'>
+        <label className='py-1 basis-[80px]' htmlFor='username'>Username: </label>
+        <input type="text" id='username' name='username' placeholder='Username' value={username}
+          onChange={evt => setUsername(evt.target.value)}
+          className='px-1 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'/>
+      </div>
+      <div className='p-2 flex'>
+        <label className='py-1 basis-[80px]' htmlFor='password'>Password: </label>
+        <input type="password" id='password' name='password' placeholder='Password' value={password}
+          onChange={evt => setPassword(evt.target.value)}
+          className='px-1 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'/>
+      </div>
+      <div className='p-2'>
+        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded' type="submit">Login</button>
+      </div>
     </form>
     <p style={{ display: wrongCreds ? 'block' : 'none' }}>Wrong credentials</p>
   </div>;
