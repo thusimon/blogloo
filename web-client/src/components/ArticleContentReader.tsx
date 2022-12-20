@@ -21,9 +21,9 @@ const ArticleContentReader = ({ article }: { article: Article }): JSX.Element =>
       <div className='article-content'>{
         article.content.split('\n').map((p, idx) => {
           if (p.startsWith(VIDEO_IDENTIFIER)) {
-            const filePath = `/static/media/${p.replace(VIDEO_IDENTIFIER, '')}`;
-            return <div key={`div-${idx}`} className='video-container'>
-              <video controls muted autoPlay loop>
+            const filePath = `/file_uploads/public/${p.replace(VIDEO_IDENTIFIER, '')}`;
+            return <div key={`div-${idx}`} className='flex justify-center'>
+              <video className='w-3/4' controls muted autoPlay loop>
                 <source src={filePath} type="video/mp4" />
               </video>
             </div>;

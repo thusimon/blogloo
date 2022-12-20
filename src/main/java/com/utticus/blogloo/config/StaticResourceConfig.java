@@ -21,7 +21,6 @@ public class StaticResourceConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         Path root = Paths.get(filesPublicPath);
-
         try {
             Resource resource = new UrlResource(root.toUri());
             String uploadFilePath = resource.getURL().toString();
@@ -29,6 +28,5 @@ public class StaticResourceConfig implements WebMvcConfigurer {
         } catch (IOException e) {
             logger.error("failed to register public uploaded file path to resource");
         }
-
     }
 }
