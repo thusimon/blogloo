@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Actions, useAppContext } from '../context/app-context';
 import ArticleInfo from './ArticleInfo';
 import ArticleInfoModel, { ArticleInfoType } from '../model/ArticleInfo';
-import { groupBy } from '../utils';
+import { groupBy, isAccessTokenValid } from '../utils';
 import ListIcon from '../assets/images/list.svg';
 
 import './SideList.scss';
@@ -11,6 +11,7 @@ import './SideList.scss';
 const SideList = (): JSX.Element => {
   const { state, dispatch } = useAppContext();
   const location = useLocation();
+  const navigate = useNavigate();
   const [articles, setArticles] = useState([] as ArticleInfoModel[][]);
 
   /**
@@ -43,12 +44,19 @@ const SideList = (): JSX.Element => {
       const options = {
         method: 'GET'
       };
-      isAdmin && Object.assign(options, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${state.jwt}`
+      if (isAdmin) {
+        const jwt = state.jwt;
+        if (!isAccessTokenValid(jwt)) {
+          navigate('/view-admin/login');
+          return;
         }
-      });
+        Object.assign(options, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${jwt}`
+          }
+        });
+      }
       const articleInfoRequest = await fetch(url, options);
       const articleResp = await articleInfoRequest.json() as ArticleInfoType[];
       const articleInfos = articleResp.map(article => new ArticleInfoModel(article));

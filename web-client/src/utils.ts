@@ -42,3 +42,24 @@ export const getBodyFontSizeClass = (size: string): string => {
       return 'text-base';
   }
 };
+
+export const isAccessTokenValid = (jwt: string): boolean => {
+  if (!jwt) {
+    return false;
+  }
+  const jwtBodyRaw = jwt.split('.')[1];
+  if (!jwtBodyRaw) {
+    return false;
+  }
+  try {
+    const jwtBodyStr = window.atob(jwtBodyRaw);
+    const jwtBody = JSON.parse(jwtBodyStr);
+    const expire = jwtBody.exp;
+    if (!Number.isInteger(expire) || expire * 1000 < new Date().getTime()) {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+  return true;
+};

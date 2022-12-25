@@ -9,6 +9,7 @@
 - docker-compose stop
 - docker-compose -f docker-compose.yml up
 - docker exec -it \<container-ID\> sh
+- docker stats
 - mysql -usa -p
 - sudo service docker start
 - sudo service redis-server restart
@@ -23,7 +24,8 @@
 - ps -aux | grep rpm
 - sudo rpm --rebuilddb
 ## docker
-Follow this [link](https://gist.github.com/npearce/6f3c7826c7499587f00957fee62f8ee9)
+- Ubuntu: Follow this [link](https://docs.docker.com/engine/install/ubuntu/) and [docker-compose](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04), but still need to run `sudo usermod -a -G docker <user>` and reboot
+- AmazonEC2: Follow this [link](https://gist.github.com/npearce/6f3c7826c7499587f00957fee62f8ee9)
 ### install
 - sudo amazon-linux-extras install docker
 - sudo service docker start
@@ -55,10 +57,11 @@ Follow this [link](https://gist.github.com/npearce/6f3c7826c7499587f00957fee62f8
 - sudo less /var/log/nginx/error.log
 ## SSL
 ### install
-Follow this [link](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/SSL-on-amazon-linux-2.html#letsencrypt)
+- sudo apt install certbot python3-certbot-nginx
+- Follow this [link](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/SSL-on-amazon-linux-2.html#letsencrypt)
 ### config
 Stop nginx server before running certbot
-- sudo certbot certonly --standalone --preferred-challenges http -d utticus.com -d www.utticus.com -d blogloo.utticus.com
+- sudo certbot certonly --standalone --preferred-challenges http -d <domain1> -d <domain2> -d <domain3>
 ### renew
 - certbot renew --no-self-upgrade
 - sudo crontab -e
