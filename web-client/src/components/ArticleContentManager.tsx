@@ -6,6 +6,7 @@ import Article from '../model/Article';
 
 import './ArticleContentManager.scss';
 import { FAKE_ID, FAKE_LIST_ID } from '../model/ArticleInfo';
+import { isAccessTokenValid } from '../utils';
 
 interface NotificationType {
   type?: string
@@ -62,11 +63,16 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
       delete payload.id;
       delete payload.articleListId;
     }
+    const jwt = state.jwt;
+    if (!isAccessTokenValid(jwt)) {
+      navigate('/view-admin/login');
+      return;
+    }
     const updateResp = await fetch('/api/admin/article/full', {
       method,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${state.jwt}`
+        Authorization: `Bearer ${jwt}`
       },
       body: JSON.stringify(payload)
     });
