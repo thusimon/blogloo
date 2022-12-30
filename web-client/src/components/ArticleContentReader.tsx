@@ -1,10 +1,6 @@
 import { useAppContext } from '../context/app-context';
 import Article from '../model/Article';
-import { getTitleFontSizeClass, getBodyFontSizeClass } from '../utils';
-
-import './ArticleContentReader.scss';
-
-const VIDEO_IDENTIFIER = '#UTTICUS_VIDEO#';
+import { getTitleFontSizeClass, getBodyFontSizeClass, parseFileTags, CLIENT_MEDIA_PREFIX } from '../utils';
 
 const ArticleContentReader = ({ article }: { article: Article }): JSX.Element => {
   const { state } = useAppContext();
@@ -13,25 +9,22 @@ const ArticleContentReader = ({ article }: { article: Article }): JSX.Element =>
   const titleFontSizeClass = getTitleFontSizeClass(fontSize);
   const bodyFontSizeClass = getBodyFontSizeClass(fontSize);
 
-  return <div className='article-container right-content-container'>
-    <div className={`article-title ${titleFontSizeClass}`}>
+  return <div className='bg-floralwhite overflow-y-auto overflow-x-hidden w-full'>
+    <div className={`text-center p-2 ${titleFontSizeClass}`}>
       {article.title}
     </div>
-    <div className={`article-main ${bodyFontSizeClass}`}>
-      <div className='article-content'>{
+    <div className={`mx-4 ${bodyFontSizeClass}`}>
+      <div>{
         article.content.split('\n').map((p, idx) => {
-          if (p.startsWith(VIDEO_IDENTIFIER)) {
-            const filePath = `/file_uploads/public/${p.replace(VIDEO_IDENTIFIER, '')}`;
-            return <div key={`div-${idx}`} className='flex justify-center'>
-              <video className='w-3/4' controls muted autoPlay loop>
-                <source src={filePath} type="video/mp4" />
-              </video>
+          if (p.startsWith(CLIENT_MEDIA_PREFIX)) {
+            return <div className='my-2' key={`div-${idx}`}>
+              {parseFileTags(p)}
             </div>;
           }
-          return <p key={`p-${idx}`}>{p}</p>;
+          return <p className='indent-4' key={`p-${idx}`}>{p}</p>;
         })
       }</div>
-      <div className='article-footer'>
+      <div className='italic text-right p-4'>
         <div className='article-author'>{article.author}</div>
         <div className='article-create-at'>{article.createAt.toLocaleDateString('en')}</div>
       </div>

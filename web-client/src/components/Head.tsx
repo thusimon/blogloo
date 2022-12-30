@@ -5,7 +5,6 @@ import { LOCALE } from '../types';
 import { localeMapping } from './ArticleInfo';
 import Preference from './Preference';
 
-import './Head.scss';
 export interface HeaderPropType {
   showLocale: boolean
 };
@@ -34,7 +33,7 @@ const Head = ({ showLocale }: HeaderPropType): JSX.Element => {
       const name = t('name');
       const { img } = localeMapping[locale];
       return <img src={img} title={name} alt={name} key={locale} data-se={locale}
-        className={`h-3/5 mx-[4px] cursor-pointer transition-transform duration-500 hover:scale-125 ${locale === state.locale ? 'selected' : ''}`}
+        className={`h-3/5 mx-[4px] cursor-pointer transition-transform duration-500 hover:scale-125 ${locale === state.locale ? 'outline outline-2 outline-snow' : ''}`}
         onClick={evt => { evt.stopPropagation(); updateLocale(locale); }}></img>;
     });
   };
