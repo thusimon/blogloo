@@ -69,7 +69,7 @@ const SideList = (): JSX.Element => {
   }, []);
 
   return (
-    <div className='side-list-container'>
+    <div className='basis-[calc(min(20vw,200px))] grow-0 shrink-0 side-list-container'>
       <div className='side-list-toggle'>
         <img src={ListIcon} title='Toggle List' alt='Toggle' onClick={toggleClickHandler}/>
       </div>

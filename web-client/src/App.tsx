@@ -4,8 +4,6 @@ import MainAppView from './components/MainAppView';
 import AdminLogin from './components/AdminLogin';
 import { Routes, Route } from 'react-router-dom';
 
-import './App.scss';
-
 function App (): JSX.Element {
   return (
     <AppContextProvider>
