@@ -18,7 +18,6 @@ export enum Actions {
   UpdateLocale,
   UpdateArticleAndListId,
   UpdateJWT,
-  ToggleSideList,
   TogglePrefModal,
   UpdateFontSize
 };
@@ -59,9 +58,6 @@ const AppReducer = (state: ContextDataType, action: ActionType): ContextDataType
     }
     case Actions.UpdateJWT: {
       return { ...state, ...data };
-    }
-    case Actions.ToggleSideList: {
-      return { ...state, ...{ sideExpand: !state.sideExpand } };
     }
     case Actions.TogglePrefModal: {
       return { ...state, ...{ prefModal: !state.prefModal } };
