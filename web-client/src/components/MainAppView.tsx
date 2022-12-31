@@ -9,8 +9,6 @@ import ArticleContentReader from './ArticleContentReader';
 
 import Loading from '../assets/images/loading.svg';
 
-import './MainAppView.scss';
-
 const MainAppView = (): JSX.Element => {
   const { listId } = useParams();
   const { state, dispatch } = useAppContext();
@@ -58,11 +56,11 @@ const MainAppView = (): JSX.Element => {
     <div className='app-header-container'>
       <Head showLocale={true} />
     </div>
-    <div className={'app-main-view-container'}>
+    <div className='overflow-y-auto h-[calc(100vh-30px)]'>
       { article
         ? <ArticleContentReader article={article} />
-        : <div className='loading-container'>
-          <img src={Loading}></img>
+        : <div className='flex justify-center h-full'>
+          <img className='w-2/5' src={Loading}></img>
         </div>
       }
     </div>

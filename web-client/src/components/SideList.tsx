@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Actions, useAppContext } from '../context/app-context';
+import { useAppContext } from '../context/app-context';
 import ArticleInfo from './ArticleInfo';
 import ArticleInfoModel, { ArticleInfoType } from '../model/ArticleInfo';
 import { groupBy, isAccessTokenValid } from '../utils';
 import ListIcon from '../assets/images/list.svg';
 
-import './SideList.scss';
-
 const SideList = (): JSX.Element => {
-  const { state, dispatch } = useAppContext();
+  const [toggleState, setToggleState] = useState(true);
+  const { state } = useAppContext();
   const location = useLocation();
   const navigate = useNavigate();
   const [articles, setArticles] = useState([] as ArticleInfoModel[][]);
@@ -35,7 +34,7 @@ const SideList = (): JSX.Element => {
   };
 
   const toggleClickHandler = (): void => {
-    dispatch({ type: Actions.ToggleSideList, data: {} });
+    setToggleState(!toggleState);
   };
 
   useEffect(() => {
@@ -69,11 +68,12 @@ const SideList = (): JSX.Element => {
   }, []);
 
   return (
-    <div className='basis-[calc(min(20vw,200px))] grow-0 shrink-0 side-list-container'>
-      <div className='side-list-toggle'>
-        <img src={ListIcon} title='Toggle List' alt='Toggle' onClick={toggleClickHandler}/>
+    <div className={`${toggleState ? 'w-[calc(min(20vw,200px))]' : 'w-0'} basis-auto grow-0 shrink-0 bg-white relative border-r border-dashed border-r-black
+      transition-[width] duration-500 flex flex-col justify-between h-[calc(100vh-30px)] z-[1]`}>
+      <div className='absolute  right-[-27px] top-[4px] transition-[opacity] duration-500 cursor-pointer opacity-20 hover:opacity-100'>
+        <img src={ListIcon} className='w-[24px] h-[24px]' title='Toggle List' alt='Toggle' onClick={toggleClickHandler}/>
       </div>
-      <div className='side-list-info'>
+      <div className='overflow-y-auto'>
         {articles.map((articleGroup, idx) => <ArticleInfo key={`article-info-group-${idx}`} articles={articleGroup} listId={articleGroup[0].articleListId} />)}
       </div>
     </div>

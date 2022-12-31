@@ -3,8 +3,6 @@ import Head from './Head';
 import SideList from './SideList';
 import ArticleContent from './ArticleContent';
 
-// import './MainApp.scss';
-
 const MainApp = (): JSX.Element => {
   const { state } = useAppContext();
   const listClass = state.sideExpand ? '' : 'hide-sidelist';

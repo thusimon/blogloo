@@ -4,7 +4,6 @@ import { Actions, useAppContext } from '../context/app-context';
 import { LOCALE } from '../types';
 import Article from '../model/Article';
 
-import './ArticleContentManager.scss';
 import { FAKE_ID, FAKE_LIST_ID } from '../model/ArticleInfo';
 import { isAccessTokenValid } from '../utils';
 
@@ -153,59 +152,86 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
     }
   };
 
+  const getNotificationJSX = (notification: NotificationType): JSX.Element => {
+    let color = 'text-green-600';
+    switch (notification.type) {
+      case 'success': {
+        color = 'text-green-600';
+        break;
+      }
+      case 'warn': {
+        color = 'text-orange-600';
+        break;
+      }
+      case 'error': {
+        color = 'text-red-600';
+        break;
+      }
+      default:
+        break;
+    }
+    return <p className={`${color} mx-3`}>{notification.message}</p>;
+  };
+
   const handleLocaleChange = (value: string): void => {
     setLocale(value as LOCALE);
     dispatch({ type: Actions.UpdateLocale, data: { locale: value } });
   };
 
+  const rowBaseClass = 'flex mx-2.5 my-1 align-center';
+  const inputBaseClass = `px-1 py-1 text-base text-gray-700 font-normal bg-white bg-clip-padding
+    border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700
+    focus:bg-white focus:border-blue-600 focus:outline-none`;
+  const buttonBaseClass = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mx-3';
+
   return <div className='bg-floralwhite w-full article-manager-container'>
-    <div className='row manage-item'>
-      <label htmlFor='id'>ID</label>
-      <input id='id' value={id} readOnly disabled/>
+    <div className={rowBaseClass}>
+      <label htmlFor='id' className='basis-[80px]'>ID</label>
+      <input id='id' value={id} className={`w-[calc(100%-120px)] ${inputBaseClass}`} readOnly disabled/>
     </div>
-    <div className='row manage-item'>
-      <label htmlFor='list-id'>List ID</label>
-      <input id='list-id' value={listId} readOnly disabled/>
+    <div className={rowBaseClass}>
+      <label htmlFor='list-id' className='basis-[80px]'>List ID</label>
+      <input id='list-id' value={listId} className={`w-[calc(100%-120px)] ${inputBaseClass}`} readOnly disabled/>
     </div>
-    <div className='row manage-item'>
-      <label htmlFor='locale'>Locale</label>
-      <select id='locale' value={locale} onChange={evt => handleLocaleChange(evt.target.value)}>
+    <div className={rowBaseClass}>
+      <label htmlFor='locale' className='basis-[80px]'>Locale</label>
+      <select id='locale' value={locale} className={`w-[calc(100%-120px)] ${inputBaseClass}`} onChange={evt => handleLocaleChange(evt.target.value)}>
         {Object.keys(LOCALE).map(l => {
           return <option key={l} value={l}>{l}</option>;
         })}
       </select>
     </div>
-    <div className='row manage-item'>
-      <label htmlFor='title'>Title</label>
-      <input id='title' value={title} onChange={evt => setTitle(evt.target.value)} />
+    <div className={rowBaseClass}>
+      <label htmlFor='title' className='basis-[80px]'>Title</label>
+      <input id='title' value={title} className={`w-[calc(100%-120px)] ${inputBaseClass}`} onChange={evt => setTitle(evt.target.value)} />
     </div>
-    <div className='row manage-item'>
-      <label htmlFor='author'>Author</label>
-      <input id='title' value={author} onChange={evt => setAuthor(evt.target.value)} />
+    <div className={rowBaseClass}>
+      <label htmlFor='author' className='basis-[80px]'>Author</label>
+      <input id='title' value={author} className={`w-[calc(100%-120px)] ${inputBaseClass}`} onChange={evt => setAuthor(evt.target.value)} />
     </div>
-    <div className='row manage-item'>
-      <label htmlFor='createAt'>CreateAt</label>
-      <input id='createAt' value={createAt} onChange={evt => setCreateAt(evt.target.value)}/>
+    <div className={rowBaseClass}>
+      <label htmlFor='createAt' className='basis-[80px]'>CreateAt</label>
+      <input id='createAt' value={createAt} className={`w-[calc(100%-120px)] ${inputBaseClass}`} onChange={evt => setCreateAt(evt.target.value)}/>
     </div>
-    <div className='row manage-item'>
-      <label htmlFor='visible'>Visible</label>
-      <input id='visible' type='checkbox' checked={visible} onChange={evt => setVisible(evt.target.checked)}/>
+    <div className={rowBaseClass}>
+      <label htmlFor='visible' className='basis-[80px]'>Visible</label>
+      <input id='visible' type='checkbox' checked={visible} className={inputBaseClass} onChange={evt => setVisible(evt.target.checked)}/>
     </div>
-    <div className='row manage-item'>
-      <label htmlFor='content'>Content</label>
-      <textarea id='Content' value={content} onChange={evt => setContent(evt.target.value)} />
+    <div className={rowBaseClass}>
+      <label htmlFor='content' className='basis-[80px]'>Content</label>
+      <textarea id='Content' value={content} className={`w-[calc(100%-120px)] h-[400px] ${inputBaseClass}`} onChange={evt => setContent(evt.target.value)} />
     </div>
-    <div className='row buttons-container'>
-      <button onClick={() => { void updateArticle(false); }}>{!id || id === FAKE_ID ? 'Create' : 'Update'}</button>
-      <button onClick={() => { void updateArticle(true); }}>Create New List</button>
-      <button onClick={() => { void deleteArticle(); }}>Delete</button>
+    <div className={rowBaseClass}>
+      <button className={buttonBaseClass} onClick={() => { void updateArticle(false); }}>{!id || id === FAKE_ID ? 'Create' : 'Update'}</button>
+      <button className={buttonBaseClass} onClick={() => { void updateArticle(true); }}>Create New List</button>
+      <button className={buttonBaseClass} onClick={() => { void deleteArticle(); }}>Delete</button>
     </div>
-    <div>
-      <input type='file' name='file' ref={fileInputRef} />
-      <button onClick={() => { void uploadFile(); }}>Upload</button>
+    <div className={rowBaseClass}>
+      <input className={buttonBaseClass} type='file' name='file' ref={fileInputRef} />
+      <button className={buttonBaseClass} onClick={() => { void uploadFile(); }}>Upload</button>
     </div>
-    <div className='row notifications-container'>
-      <p className={notification.type}>{notification.message}</p>
+    <div className={rowBaseClass}>
+      {getNotificationJSX(notification)}
     </div>
   </div>;
 };
