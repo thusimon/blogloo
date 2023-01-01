@@ -7,7 +7,7 @@ const MainApp = (): JSX.Element => {
   const { state } = useAppContext();
   const listClass = state.sideExpand ? '' : 'hide-sidelist';
   return <div className='select-none'>
-    <div className='app-header-container'>
+    <div>
       <Head showLocale={false} />
     </div>
     <div className={`flex h-[calc(100vh-30px)] overflow-hidden ${listClass}`}>
