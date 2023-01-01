@@ -52,8 +52,8 @@ const MainAppView = (): JSX.Element => {
     void getArticle(articleInfo.id);
   }, [state.locale]);
 
-  return <div className="app">
-    <div className='app-header-container'>
+  return <div>
+    <div>
       <Head showLocale={true} />
     </div>
     <div className='overflow-y-auto h-[calc(100vh-30px)]'>
