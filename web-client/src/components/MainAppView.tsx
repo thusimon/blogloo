@@ -22,6 +22,7 @@ const MainAppView = (): JSX.Element => {
     const articleRequest = await fetch(`/api/user/article/full-a/${encodeURIComponent(id)}`);
     const articleResp = await articleRequest.json() as ArticleType;
     const article = new Article(articleResp);
+    document.title = article.title ?? 'Blogloo';
     setArticle(article);
   };
 

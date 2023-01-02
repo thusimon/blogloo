@@ -31,13 +31,17 @@ const ArticleInfo = ({ articles, listId }: ArtileInfoPropsType): JSX.Element => 
   const { state, dispatch } = useAppContext();
   const i18n = getI18n();
 
-  const [localeToggle, setLocaleToggle] = useState(false);
+  const locales = Object.keys(LOCALE) as LOCALE[];
+  const filteredLocales = locales.filter(locale => articles.find(article => locale === article.locale));
 
-  const article = getArticleByLocale(state.locale, articles);
-  const articleLocale = article ? state.locale : articles[0].locale;
+  const [localeToggle, setLocaleToggle] = useState(false);
+  const [articleLocale, setArticleLocale] = useState(filteredLocales[0]);
+
+  const article = getArticleByLocale(articleLocale, articles);
 
   const updateLocale = (locale: LOCALE): void => {
     const article = getArticleByLocale(locale, articles);
+    document.title = article ? article.title : 'Blogloo';
     dispatch({
       type: Actions.UpdateArticleAndListId,
       data: {
@@ -47,6 +51,7 @@ const ArticleInfo = ({ articles, listId }: ArtileInfoPropsType): JSX.Element => 
       }
     });
     dispatch({ type: Actions.UpdateLocale, data: { locale } });
+    setArticleLocale(locale);
   };
 
   const gridCellClass = 'overflow-hidden whitespace-nowrap text-ellipsis';

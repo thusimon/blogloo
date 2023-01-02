@@ -9,7 +9,7 @@ const ArticleContentReader = ({ article }: { article: Article }): JSX.Element =>
   const titleFontSizeClass = getTitleFontSizeClass(fontSize);
   const bodyFontSizeClass = getBodyFontSizeClass(fontSize);
 
-  return <div className='bg-floralwhite overflow-y-auto overflow-x-hidden w-full'>
+  return <div className='bg-floralwhite overflow-y-auto overflow-x-hidden w-full h-full'>
     <div className={`text-center p-2 ${titleFontSizeClass}`}>
       {article.title}
     </div>
