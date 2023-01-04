@@ -15,7 +15,9 @@ void i18n
           small: 'Small',
           normal: 'Normal',
           large: 'Large',
-          xlarge: 'Extra Large'
+          xlarge: 'Extra Large',
+          errorOccurs: 'An error occurs',
+          resp404: 'The resource can not be found'
         }
       },
       zh_TW: {
@@ -27,7 +29,9 @@ void i18n
           small: '小',
           normal: '正常',
           large: '大',
-          xlarge: '特大'
+          xlarge: '特大',
+          errorOccurs: '出現了一個錯誤',
+          resp404: '找不到相關的資源'
         }
       },
       zh_CN: {
@@ -39,7 +43,9 @@ void i18n
           small: '小',
           normal: '正常',
           large: '大',
-          xlarge: '特大'
+          xlarge: '特大',
+          errorOccurs: '出现了一个错误',
+          resp404: '找不到相关的资源'
         }
       }
     },
