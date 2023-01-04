@@ -15,7 +15,13 @@ const Head = ({ showLocale }: HeaderPropType): JSX.Element => {
 
   useEffect(() => {
     void i18n.changeLanguage(state.locale);
-  }, [state.locale]);
+    const locales = Object.keys(LOCALE) as LOCALE[];
+    const filteredLocales = locales.filter(locale => state.listArticles.find(article => locale === article.locale));
+    if (filteredLocales.length > 0 && !filteredLocales.includes(state.locale)) {
+      // need to update the state.locale since the articles don't have this locale
+      updateLocale(filteredLocales[0]);
+    }
+  }, [state.locale, state.listArticles]);
 
   const updateLocale = (locale: LOCALE): void => {
     dispatch({ type: Actions.UpdateLocale, data: { locale } });
@@ -46,9 +52,7 @@ const Head = ({ showLocale }: HeaderPropType): JSX.Element => {
     </div>
     {
       showLocale && <div className='h-full flex items-center'>
-        {
-          getLocalesFromArticles()
-        }
+        {getLocalesFromArticles()}
       </div>
     }
     <Preference />

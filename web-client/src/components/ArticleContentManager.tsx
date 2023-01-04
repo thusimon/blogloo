@@ -222,8 +222,8 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
       <textarea id='Content' value={content} className={`w-[calc(100%-120px)] h-[400px] ${inputBaseClass}`} onChange={evt => setContent(evt.target.value)} />
     </div>
     <div className={rowBaseClass}>
-      <button className={buttonBaseClass} onClick={() => { void updateArticle(false); }}>{!id || id === FAKE_ID ? 'Create' : 'Update'}</button>
       <button className={buttonBaseClass} onClick={() => { void updateArticle(true); }}>Create New List</button>
+      <button className={buttonBaseClass} onClick={() => { void updateArticle(false); }}>{!id || id === FAKE_ID ? 'Create' : 'Update'}</button>
       <button className={buttonBaseClass} onClick={() => { void deleteArticle(); }}>Delete</button>
     </div>
     <div className={rowBaseClass}>

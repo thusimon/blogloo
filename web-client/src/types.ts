@@ -15,3 +15,8 @@ export const LOCALE_COUNTRY_MAPPING = {
   [LOCALE.zh_CN]: COUNTRY.cn,
   [LOCALE.zh_TW]: COUNTRY.tw
 };
+
+export interface HTTPStatusErrorType {
+  status: number
+  message: string
+};
