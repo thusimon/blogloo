@@ -29,7 +29,9 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
   useEffect(() => {
     setId(article ? article.id : FAKE_ID);
     setListId(state.listId);
-    setLocale(article ? article.locale : state.locale);
+    if (article) {
+      setLocale(article.locale);
+    }
     setTitle(article ? article.title : '');
     setAuthor(article ? article.author : '');
     setCreateAt(article ? article.createAt.toISOString() : new Date().toISOString());
@@ -175,7 +177,9 @@ const ArticleContentManager = ({ article }: { article: Article | null }): JSX.El
 
   const handleLocaleChange = (value: string): void => {
     setLocale(value as LOCALE);
-    dispatch({ type: Actions.UpdateLocale, data: { locale: value } });
+    const localeArticle = state.listArticles.find(article => article.locale === value);
+    const articleId = localeArticle ? localeArticle.id : '';
+    dispatch({ type: Actions.UpdateArticleAndListId, data: { articleId } });
   };
 
   const rowBaseClass = 'flex mx-2.5 my-1 align-center';
