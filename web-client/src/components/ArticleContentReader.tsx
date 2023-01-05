@@ -21,6 +21,9 @@ const ArticleContentReader = ({ article }: { article: Article }): JSX.Element =>
               {parseFileTags(p)}
             </div>;
           }
+          if (p.length === 0) {
+            return <br key={`div-${idx}`}/>;
+          }
           return <p className='indent-4' key={`p-${idx}`}>{p}</p>;
         })
       }</div>
