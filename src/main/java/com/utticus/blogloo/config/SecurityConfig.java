@@ -1,6 +1,7 @@
 package com.utticus.blogloo.config;
 
 import com.utticus.blogloo.filter.JwtRequestFilter;
+import com.utticus.blogloo.handler.UserAccessDeniedEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,9 @@ public class SecurityConfig {
     @Autowired
     JwtRequestFilter jwtRequestFilter;
 
+    @Autowired
+    UserAccessDeniedEntryPoint userAccessDeniedHandler;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf()
@@ -35,6 +39,7 @@ public class SecurityConfig {
                         "/view/**",
                         "/view-admin/login",
                         "/api/user/**",
+                        "/access-denied",
                         "/file_uploads/public/**")
                 .permitAll()
                 .antMatchers(HttpMethod.POST,
@@ -53,6 +58,7 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.exceptionHandling().authenticationEntryPoint(userAccessDeniedHandler);
         return http.build();
     }
 
