@@ -50,7 +50,7 @@ void i18n
       }
     },
     fallbackLng: 'en',
-    debug: true,
+    debug: process.env.NODE_ENV !== 'production',
 
     // have a common namespace used around the full app
     ns: ['translations'],
