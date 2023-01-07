@@ -37,31 +37,32 @@ const SideList = (): JSX.Element => {
     setToggleState(!toggleState);
   };
 
-  useEffect(() => {
-    const getArticles = async (isAdmin: boolean): Promise<void> => {
-      const url = `/api/${isAdmin ? 'admin' : 'user'}/article/all`;
-      const options = {
-        method: 'GET'
-      };
-      if (isAdmin) {
-        const jwt = state.jwt;
-        if (!isAccessTokenValid(jwt)) {
-          navigate('/view-admin/login');
-          return;
-        }
-        Object.assign(options, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${jwt}`
-          }
-        });
-      }
-      const articleInfoRequest = await fetch(url, options);
-      const articleResp = await articleInfoRequest.json() as ArticleInfoType[];
-      const articleInfos = articleResp.map(article => new ArticleInfoModel(article));
-      const sortedGroupedArticles = groupArticlesByListId(articleInfos);
-      setArticles(sortedGroupedArticles);
+  const getArticles = async (isAdmin: boolean): Promise<void> => {
+    const url = `/api/${isAdmin ? 'admin' : 'user'}/article/all`;
+    const options = {
+      method: 'GET'
     };
+    if (isAdmin) {
+      const jwt = state.jwt;
+      if (!isAccessTokenValid(jwt)) {
+        navigate('/view-admin/login');
+        return;
+      }
+      Object.assign(options, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwt}`
+        }
+      });
+    }
+    const articleInfoRequest = await fetch(url, options);
+    const articleResp = await articleInfoRequest.json() as ArticleInfoType[];
+    const articleInfos = articleResp.map(article => new ArticleInfoModel(article));
+    const sortedGroupedArticles = groupArticlesByListId(articleInfos);
+    setArticles(sortedGroupedArticles);
+  };
+
+  useEffect(() => {
     const isAdmin = location.pathname === '/view-admin/manage' ||
       location.pathname === '/view-admin';
     void getArticles(isAdmin);
@@ -76,6 +77,13 @@ const SideList = (): JSX.Element => {
       <div className='overflow-y-auto'>
         {articles.map((articleGroup, idx) => <ArticleInfo key={`article-info-group-${idx}`} articles={articleGroup} listId={articleGroup[0].articleListId} />)}
       </div>
+      {
+        location.pathname.startsWith('/view-admin') && <div className='text-center m-2'>
+          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mx-3' onClick={() => {
+            void getArticles(true);
+          }}>Refresh</button>
+        </div>
+      }
     </div>
   );
 };
