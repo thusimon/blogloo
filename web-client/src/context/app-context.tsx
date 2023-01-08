@@ -78,9 +78,13 @@ interface ProviderPropType {
 
 const buildContextData = (contextData: ContextDataType): ContextDataType => {
   const query = useQuery();
-  const locale = query.get('locale');
+  const locale = query.get('loc');
+  const fontSize = query.get('fs');
   if (locale != null) {
     contextData.locale = locale as LOCALE;
+  }
+  if (fontSize != null) {
+    contextData.fontSize = fontSize;
   }
   return contextData;
 };

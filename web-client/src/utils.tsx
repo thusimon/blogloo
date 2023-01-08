@@ -64,43 +64,6 @@ export const isAccessTokenValid = (jwt: string): boolean => {
   return true;
 };
 
-export const CLIENT_MEDIA_PREFIX = '$UTTICUS_MEDIA$';
-
 export const MEDIA_IMAGE_EXT = ['.png', '.jpg', '.jpeg', '.gif', '.svg'];
 
 export const MEDIA_VIDEO_EXT = ['.mp4'];
-
-export const getFileType = (fileName: string): string => {
-  const fileExt = fileName.substring(fileName.lastIndexOf('.'));
-  if (MEDIA_IMAGE_EXT.includes(fileExt)) {
-    return 'image';
-  }
-  if (MEDIA_VIDEO_EXT.includes(fileExt)) {
-    return 'video';
-  }
-  return 'unknown';
-};
-
-export const parseFileTags = (content: string): JSX.Element => {
-  const contentParts = content.split('$');
-  const fileNames = contentParts[2];
-  const widths = contentParts[3];
-  const fileNameSplit = fileNames.split(',');
-  const widthSplit = widths.split(',');
-  const contents = fileNameSplit.map((fileName, idx) => {
-    const fileType = getFileType(fileName);
-    const widthClass = `${(widthSplit[idx] ? `w-${widthSplit[idx]}` : '')} self-center`;
-    if (fileType === 'image') {
-      return <img src={`/file_uploads/public/${fileName}`} className={widthClass} key={`img-${idx}`} />;
-    }
-    if (fileType === 'video') {
-      return <video className={widthClass} key={`video-${idx}`} controls muted autoPlay loop>
-        <source src={`/file_uploads/public/${fileName}`} type="video/mp4" />
-      </video>;
-    }
-    return <></>;
-  });
-  return <div className='flex flex-row flex-wrap justify-evenly'>
-    {contents}
-  </div>;
-};
