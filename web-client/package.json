@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@savvywombat/tailwindcss-grid-areas": "^3.0.0",
+    "@tailwindcss/typography": "^0.5.8",
     "@types/marked": "^4.0.8",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "autoprefixer": "^10.4.13",

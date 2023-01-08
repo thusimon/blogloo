@@ -3,6 +3,8 @@ import { useAppContext } from '../context/app-context';
 import Article from '../model/Article';
 import { getTitleFontSizeClass, getBodyFontSizeClass } from '../utils';
 
+import '../styles/markdown-override.scss';
+
 const ArticleContentReader = ({ article }: { article: Article }): JSX.Element => {
   const { state } = useAppContext();
 
@@ -14,7 +16,7 @@ const ArticleContentReader = ({ article }: { article: Article }): JSX.Element =>
     <div className={`text-center p-2 ${titleFontSizeClass}`}>
       {article.title}
     </div>
-    <div className={`mx-4 ${bodyFontSizeClass}`}>
+    <div className='mx-4'>
       {/* <div>{
         article.content.split('\n').map((p, idx) => {
           if (p.startsWith(CLIENT_MEDIA_PREFIX)) {
@@ -28,9 +30,9 @@ const ArticleContentReader = ({ article }: { article: Article }): JSX.Element =>
           return <p className='indent-4' key={`p-${idx}`}>{p}</p>;
         })
       }</div> */}
-      <div dangerouslySetInnerHTML={{
+      <article id='markdown-article' className={`prose ${bodyFontSizeClass} text-black`} dangerouslySetInnerHTML={{
         __html: marked.parse(article.content)
-      }}></div>
+      }}></article>
       <div className='italic text-right p-4'>
         <div className='article-author'>{article.author}</div>
         <div className='article-create-at'>{article.createAt.toLocaleDateString('en')}</div>
