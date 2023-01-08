@@ -1,0 +1,24 @@
+#markdown-article {
+  @apply max-w-max;
+  blockquote {
+    @apply font-normal not-italic border-slate-300;
+    p::before {
+      @apply content-none;
+    }
+  }
+  &.text-xs > p {
+    @apply indent-3
+  }
+  &.text-base > p {
+    @apply indent-4
+  }
+  &.text-2xl > p {
+    @apply indent-6
+  }
+  &.text-4xl > p{
+    @apply indent-9
+  }
+  li::marker {
+    @apply text-slate-600
+  }
+}
