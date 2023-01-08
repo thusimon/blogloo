@@ -17,19 +17,6 @@ const ArticleContentReader = ({ article }: { article: Article }): JSX.Element =>
       {article.title}
     </div>
     <div className='mx-4'>
-      {/* <div>{
-        article.content.split('\n').map((p, idx) => {
-          if (p.startsWith(CLIENT_MEDIA_PREFIX)) {
-            return <div className='my-2' key={`div-${idx}`}>
-              {parseFileTags(p)}
-            </div>;
-          }
-          if (p.length === 0) {
-            return <br key={`div-${idx}`}/>;
-          }
-          return <p className='indent-4' key={`p-${idx}`}>{p}</p>;
-        })
-      }</div> */}
       <article id='markdown-article' className={`prose ${bodyFontSizeClass} text-black`} dangerouslySetInnerHTML={{
         __html: marked.parse(article.content)
       }}></article>
