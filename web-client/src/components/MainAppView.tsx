@@ -84,7 +84,7 @@ const MainAppView = (): JSX.Element => {
     }
   };
 
-  return <div className='select-none'>
+  return <div>
     <div>
       <Head showLocale={true} />
     </div>
