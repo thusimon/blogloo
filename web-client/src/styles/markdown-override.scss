@@ -21,4 +21,7 @@
   li::marker {
     @apply text-slate-600
   }
+  hr {
+    @apply border-slate-500 mt-5 mb-8;
+  }
 }
