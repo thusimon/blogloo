@@ -1,5 +1,5 @@
 #markdown-article {
-  @apply max-w-max;
+  @apply max-w-full;
   blockquote {
     @apply font-normal not-italic border-slate-300;
     p::before {
