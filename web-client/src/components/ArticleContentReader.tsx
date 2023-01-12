@@ -20,7 +20,7 @@ const ArticleContentReader = ({ article }: { article: Article }): JSX.Element =>
       <article id='markdown-article' className={`prose ${bodyFontSizeClass} text-black`} dangerouslySetInnerHTML={{
         __html: marked.parse(article.content)
       }}></article>
-      <div className='italic text-right p-4'>
+      <div className={`italic text-right p-4 ${bodyFontSizeClass}`}>
         <div className='article-author'>{article.author}</div>
         <div className='article-create-at'>{article.createAt.toLocaleDateString('en')}</div>
       </div>
