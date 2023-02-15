@@ -2,29 +2,29 @@
 - docker image ls
 - docker image prune -a
 - docker system prune -a
-- docker stop \<container-ID\>
+- docker stop [container-ID]
 - docker build -t blogloo-server .
 - docker-compose build
 - docker-compose up -d
 - docker-compose stop
 - docker-compose -f docker-compose.yml up
-- docker exec -it \<container-ID\> sh
+- docker exec -it [container-ID] sh
 - docker stats
 - mysql -usa -p
 - sudo service docker start
 - sudo service redis-server restart
 
 # aws
-- ssh -i lu-dev-key.pem \<username\>@\<instance-public-ip\>
-- scp -r -i lu-dev-key.pem ./target/blogloo-0.0.1-SNAPSHOT.war \<username\>@\<instance-public-ip\>:~/apps/blogloo/target
-- scp -r -i lu-dev-key.pem ./var/www/html \<username\>@\<instance-public-ip\>:/var/www
+- ssh -i lu-dev-key.pem [username]@[instance-public-ip]
+- scp -r -i lu-dev-key.pem ./target/blogloo-0.0.1-SNAPSHOT.war [username]@[instance-public-ip]:~/apps/blogloo/target
+- scp -r -i lu-dev-key.pem ./var/www/html [username]@[instance-public-ip]:/var/www
 - sudo yum update
 ### rpm lock
 - cd /var/lib/rpm
 - ps -aux | grep rpm
 - sudo rpm --rebuilddb
 ## docker
-- Ubuntu: Follow this [link](https://docs.docker.com/engine/install/ubuntu/) and [docker-compose](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04), but still need to run `sudo usermod -a -G docker <user>` and reboot
+- Ubuntu: Follow this [link](https://docs.docker.com/engine/install/ubuntu/) and [docker-compose](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04), but still need to run `sudo usermod -a -G docker [user]` and reboot
 - AmazonEC2: Follow this [link](https://gist.github.com/npearce/6f3c7826c7499587f00957fee62f8ee9)
 ### install
 - sudo amazon-linux-extras install docker
@@ -61,9 +61,10 @@
 - Follow this [link](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/SSL-on-amazon-linux-2.html#letsencrypt)
 ### config
 Stop nginx server before running certbot
-- sudo certbot certonly --standalone --preferred-challenges http -d <domain1> -d <domain2> -d <domain3>
-### renew
-- certbot renew --no-self-upgrade
+- sudo certbot certonly --standalone --preferred-challenges http -d [domain1] -d [domain2] -d [domain3]
+### renew (stop nginx)
+- sudo certbot renew
+- sudo certbot renew --dry-run
 - sudo crontab -e
 - add `59 1,13 * * * root certbot renew --no-self-upgrade`
 - sudo systemctl restart crond
