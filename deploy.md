@@ -67,7 +67,7 @@ Stop nginx server before running certbot
 - sudo certbot renew
 - sudo certbot renew --dry-run
 - sudo crontab -e
-- add `* * 1 * * \<absolute_path\>/RenewSSL.sh >> "\<absolute_path\>/logs/$(date +\%Y-\%m-\%d_\%H:\%M).log"`
+- add `0 0 1 * * \<absolute_path\>/RenewSSL.sh >> "\<absolute_path\>/logs/$(date +\%Y-\%m-\%d_\%H:\%M).log"`
 - sudo systemctl restart crond
 ## linux
 ### performance
