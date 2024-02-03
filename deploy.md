@@ -72,3 +72,25 @@ Stop nginx server before running certbot
 ## linux
 ### performance
 - top #shift+m
+- free -h
+- df -h
+### add and config swapfile
+- sudo swapon --show #check if swapfile exists
+- sudo fallocate -l 5G /swapfile
+- ls -lh /swapfile
+- sudo chmod 600 /swapfile
+- sudo mkswap /swapfile
+- sudo swapon /swapfile
+#### preserve swapfile settings
+- sudo cp /etc/fstab /etc/fstab.bak #preserve swapfile settings
+- echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+#### config swappiness
+- cat /proc/sys/vm/swappiness
+- sudo sysctl vm.swappiness=10
+- sudo vi /etc/sysctl.conf
+- add `vm.swappiness=10`
+#### config cache_pressure
+- cat /proc/sys/vm/vfs_cache_pressure
+- sudo sysctl vm.vfs_cache_pressure=50
+- sudo vi /etc/sysctl.conf
+- add `vm.vfs_cache_pressure=50`
