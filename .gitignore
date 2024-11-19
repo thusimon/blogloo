@@ -36,6 +36,8 @@ build/
 ### keys ###
 *.pem
 *.ppk
+*.key
+*.pub
 
 ### project specific ###
 file_uploads
