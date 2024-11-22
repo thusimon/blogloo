@@ -37,6 +37,11 @@
 - sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
 - sudo chmod +x /usr/local/bin/docker-compose
 - docker-compose version
+### data migration
+- docker exec -i <src-container-ID> mysqldump --no-tablespaces -u <username> -p<password> <database_name> > database_dump.sql
+- #copy the sql file to target machine, and make sure target mysql container is running
+- docker cp /path/to/destination/database_dump.sql <tar-container-ID>:/database_dump.sql
+- docker exec -i <tar-container-ID> mysql -u <username> -p<password> <database_name> < database_dump.sql
 ## nginx
 ### install
 - sudo yum clean metadata
